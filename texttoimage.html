@@ -10,12 +10,15 @@
   </head>
   <body>
     <header>
+      <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
       <div class="logo">
         <img
-          src="claude.jpg"
+          src=".jpg"
           alt="Text to Image"
-          width="100px"
-          height="100px"
+          width="50px"
+          height="50px"
         />
         <span class="logo_speech_text">Text to Image</span>
       </div>
@@ -211,6 +214,20 @@
           alert(`You clicked: ${action}`);
           dropdownMenu.classList.remove('active');
         });
+      });
+
+       // Mobile menu toggle
+      const menuToggle = document.querySelector('.menu-toggle');
+      const menu = document.querySelector('.menu');
+
+      document.addEventListener('click', function(e) {
+      
+      if (menuToggle.contains(e.target)) {
+          menu.classList.toggle('active');
+      }
+      else if (!menu.contains(e.target)) {
+          menu.classList.remove('active');
+      }
       });
 
     </script>

@@ -17,7 +17,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   background-color: #0c0233;
   color: white;
 }
@@ -36,6 +36,10 @@ header {
 .logo_speech_text {
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.menu-toggle {
+  display: none;
 }
 
 .menu {
@@ -62,7 +66,6 @@ header {
 /* Avatar styles */
 .avatar-container {
   position: relative;
-  left: -30px;
 }
 
 .avatar {
@@ -306,13 +309,21 @@ button {
 }
 
 .generate {
-  background-color: #1156a6;
+  background-color: #1e64b3;
   color: white;
+}
+
+.generate:hover {
+  background-color: #315273;
 }
 
 .clear {
   background-color: #7a1919;
   color: #ddd;
+}
+
+.clear:hover {
+  background-color: #a85b5b;
 }
 
 .output-container {
@@ -379,14 +390,29 @@ button {
 @media (max-width: 768px) {
 
   header {
+    position: relative;
     flex-direction: column;
     align-items: flex-start;
     padding: 1rem;
   }
 
   .logo {
+    margin-top: 40px;
     justify-content: space-between;
     width: 100%;
+    position: relative;
+  }
+
+  .logo img {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    cursor: pointer;
+    top: 40px;
+    left: 30px;
   }
 
   .logo_speech_text {
@@ -400,6 +426,11 @@ button {
     gap: 0.5rem;
     width: 100%;
     margin-top: 1rem;
+    display: none;
+  }
+
+  .menu.active {
+    display: flex;
   }
 
   .menu a {
@@ -410,9 +441,8 @@ button {
 
   .avatar-container {
     position: absolute;
-    top: 3rem;
-    right: 3rem;
-    left: auto;
+    right: 30px;
+    top: 40px;
   }
 
   .avatar {
