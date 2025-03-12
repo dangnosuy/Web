@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="texttovideo.css" />
+    <title>AI Tools </title>
+  </head>
+  <body>
+    <header>
+      <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo">
+        <img
+          src=".jpg"
+          alt="Text to Image"
+          width="50px"
+          height="50px"
+        />
+        <span class="logo_speech_text">Text to Video</span>
+      </div>
+      <nav class="menu">
+        <a href="#">Home</a>
+        <a href="#">Text to Image</a>
+        <a href="#" class="active">Text to Video</a>
+        <a href="#">Text to Speech</a>
+      </nav>
+      <div class="avatar-container">
+        <img src="" alt="User Avatar" class="avatar" id="avatarImg">
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-menu-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-menu-item logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Đăng xuất</span>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    </header>
+    <main>
+      <!-- Chat History Sidebar -->
+      <div class="chat-history collapsed">
+        <div class="history-toggle" id="historyToggle">
+          <i class="fa-solid fa-chevron-right" id="toggleIcon"></i>
+        </div>
+        <h3 class="history-title">History</h3>
+        <div class="history-item active">
+          <p>Đoạn chat 1</p>
+          <small>2 hours ago</small>
+        </div>
+        <div class="history-item">
+          <p>Đoạn chat 2</p>
+          <small>Yesterday</small>
+        </div>
+        <div class="history-item">
+          <p>Đoạn chat 3</p>
+          <small>3 days ago</small>
+        </div>
+        <div class="history-item">
+          <p>Đoạn chat 4</p>
+          <small>Last week</small>
+        </div>
+      </div>
+
+      <!-- Main Workspace -->
+      <div class="workspace expanded">
+        <div class="text-input-container">
+          <label for="textInput">Describe the video you want to generate</label>
+          <textarea
+            id="textInput"
+            placeholder="Enter detailed description of the image you want to create..."
+          >Tôi muốn tạo một video ...</textarea>
+          <div class="controls">
+            <div class="params">
+              <select id="style" name="style">
+                <option value="realistic" selected>Realistic</option>
+                <option value="anime">Anime</option>
+                <option value="cartoon">Cartoon</option>
+                <option value="watercolor">Watercolor</option>
+                <option value="oil-painting">Oil Painting</option>
+                <option value="digital-art">Digital Art</option>
+              </select>
+              
+              <select id="ratio" name="ratio">
+                <option value="720p" selected>720p</option>
+                <option value="1080p">1080p</option>
+                <option value="2K">2K</option>
+                <option value="4K">4K</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button class="generate">Generate Video</button>
+              <button class="clear">Clear</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="output-container">
+          <button class="close-btn">X</button>
+          <label for="videoOutput" class="title">Generated Video</label>
+          <div class="video-wrapper" id="videoOutput">
+            <video controls>
+              <source src="test.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-actions">
+              <button class="download-video">
+                <i class="fas fa-download"></i> Save Video
+              </button>
+              <button class="share-video">
+                <i class="fas fa-share-alt"></i> Share Video
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>        
+    </main>
+
+    <script>
+      // Toggle history sidebar
+      const historyToggle = document.getElementById('historyToggle');
+      const toggleIcon = document.getElementById('toggleIcon');
+      const chatHistory = document.querySelector('.chat-history');
+      const workspace = document.querySelector('.workspace');
+      
+      historyToggle.addEventListener('click', function() {
+        chatHistory.classList.toggle('collapsed');
+        workspace.classList.toggle('expanded');
+      
+        // Change icon direction
+        if (chatHistory.classList.contains('collapsed')) {
+          toggleIcon.classList.remove('fa-solid', 'fa-chevron-left');
+          toggleIcon.classList.add('fa-solid', 'fa-chevron-right');
+        } else {
+          toggleIcon.classList.remove('fa-solid', 'fa-chevron-right');
+          toggleIcon.classList.add('fa-solid', 'fa-chevron-left');
+        }
+      });
+      
+      // Basic functionality for demonstration
+      // Clear text input
+      document.querySelector('.clear').addEventListener('click', function() {
+        document.getElementById('textInput').value = '';
+      });
+      // Generate images
+      document.querySelector('.generate').addEventListener('click', function() {
+        document.querySelector('.workspace').classList.add('full-output');
+      });
+      // Close output container
+      document.querySelector('.close-btn').addEventListener('click', function() {
+        document.querySelector('.workspace').classList.remove('full-output');
+      });
+
+      // Handle history items
+      const historyItems = document.querySelectorAll('.history-item');
+      historyItems.forEach(item => {
+        item.addEventListener('click', function() {
+          // Remove active class from all items
+          historyItems.forEach(i => i.classList.remove('active'));
+          // Add active class to clicked item
+          this.classList.add('active');
+          // Set the text input to the history item text
+          document.getElementById('textInput').value = this.querySelector('p').textContent;
+        });
+      });
+
+      // Avatar dropdown functionality
+      const avatarImg = document.getElementById('avatarImg');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      
+      // Toggle dropdown when avatar is clicked
+      avatarImg.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('active');
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!avatarImg.contains(e.target) && !dropdownMenu.contains(e.target)) {
+          dropdownMenu.classList.remove('active');
+        }
+      });
+      
+      // Add click events for menu items
+      document.querySelectorAll('.dropdown-menu-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const action = this.querySelector('span').textContent;
+          alert(`You clicked: ${action}`);
+          dropdownMenu.classList.remove('active');
+        });
+      });
+
+      // Mobile menu toggle
+      const menuToggle = document.querySelector('.menu-toggle');
+      const menu = document.querySelector('.menu');
+
+      document.addEventListener('click', function(e) {
+      
+      if (menuToggle.contains(e.target)) {
+          menu.classList.toggle('active');
+      }
+      else if (!menu.contains(e.target)) {
+          menu.classList.remove('active');
+      }
+      });
+
+    </script>
+  </body>
+</html>
