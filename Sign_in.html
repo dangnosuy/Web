@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
@@ -11,10 +10,11 @@
 </head>
 <body>
     <div id="wraper">
-        <from action="../data" id="login_register">
-            <div class="logo">
-                <img class="image_logo" src="../logo.png">
-                <span class="name_logo"> AI Tools</span>
+        <from action="" id="login_register">
+            <div class="control">
+                <a href="#" class="exit">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
             </div>
             <h1 class="heading"> Sign in to Your Account</h1>
             <div class="group">
@@ -36,13 +36,13 @@
                     </div>
                 </div>
             </div>
-            <label class="reset_password">
+            <div class="reset_password">
                 <input type="checkbox" id="rememberMe" name="rememberMe">
                 <label for="rememberMe">Remember me</label>
                 <a href="">
                     <span>Forgot your password?</span>                    
                 </a>
-            </label>    
+            </div>    
             <a href="">
                 <button type="submit" id="submit">Sign In</button>
             </a>
