@@ -1,0 +1,90 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Căn giữa theo chiều dọc */
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+  gap: 20px;
+}
+
+h1 {
+  padding-top: 300px;
+  color: rgb(0, 21, 255);
+}
+
+.Share_feedback {
+  background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#feedback {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Căn giữa nội dung form */
+  justify-content: center;
+  width: 90%;
+  max-width: 500px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: #444;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%; /* Đảm bảo input luôn vừa khung */
+  padding: 10px;
+  border: 1px solid #d4e2ff;
+  border-radius: 5px;
+  background-color: #e8f0fe;
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.star {
+  font-size: 30px;
+  color: lightgray;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.star:hover,
+.star.active {
+  color: gold;
+}
+.submit {
+  background-color: rgb(33, 81, 191);
+  width: 100%;
+  height: 35px;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
+}
