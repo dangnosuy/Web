@@ -4,7 +4,7 @@ import hashlib
 import os
 
 login = Flask(__name__)
-login.secret_key = "secret_key"  # Thay đổi khóa bí mật này
+login.secret_key = "secret_key"  #key
 
 # Cấu hình cơ sở dữ liệu
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -65,7 +65,7 @@ def sign_in():
             return "Đăng nhập thành công"
         else:
             return "Đăng nhập thất bại"
-   return render_template("sign_in.html") # hiển thị trang sign_in.html
+   return render_template("sign_in.html")
 
 if __name__ == "__main__":
     login.run(debug=True)
