@@ -10,11 +10,15 @@
 </head>
 <body>
     <div id="wraper">
-        <form id="login_register" action="/sign_in">
+        <form id="login_register">
             <div class="control">
                 <a href="#" class="exit">
                     <i class="fa-solid fa-xmark"></i>
                 </a>
+            </div>
+            <div class="logo">
+                <img class="image_logo" src="../static/logo.png">
+                <span class="name_logo"> AI Tools</span>
             </div>
             <h1 class="heading"> Sign in to Your Account</h1>
             <div class="group">
@@ -22,7 +26,7 @@
                 <br>
                 <div class="form">
                     <i class="far fa-user"></i>
-                    <input name="username" type="text" class="input" placeholder="Enter username">  
+                    <input id="username" type="text" class="input" placeholder="Enter username">  
                 </div>
             </div>
             <div class="group">
@@ -30,7 +34,7 @@
                 <br>
                 <div class="form">
                     <i class="fa fa-key"></i>
-                    <input name="password" type="password" class="input" placeholder="Enter password">  
+                    <input id="password" type="password" class="input" placeholder="Enter password">  
                     <div class="eye">
                         <i class="far fa-eye"></i>
                     </div>
@@ -43,25 +47,21 @@
                     <span>Forgot your password?</span>                    
                 </a>
             </div>    
-            <a href="">
-                <button type="submit" id="submit">Sign In</button>
-            </a>
-            <div class="sign_up">
+            <button type="submit" class="submit" id="sign_in">Sign In</button>
+            <div class="register">
                 <span>Don't have an account?</span>
                 <a href="./sign_up">
                     <span >Sign up for AI Tools</span>
                 </a>
             </div>        
+            <hr>
             <div class="other">
-                <hr>
-                <div class="google">
-                    <i class="fa-brands fa-google"></i>
-                    <span>Google</span>
-                </div>
-                <div class="facebook">
-                    <i class="fa-brands fa-facebook-f"></i>
-                    <span>Facebook</span>
-                </div>
+                <i class="fa-brands fa-google"></i>
+                <span>Google</span>
+            </div>
+            <div class="other">
+                <i class="fa-brands fa-facebook-f"></i>
+                <span>Facebook</span>
             </div>
         </form>
     </div>

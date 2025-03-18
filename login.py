@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_mysqldb import MySQL
 import hashlib
 import os
@@ -17,51 +17,49 @@ mysql = MySQL(login)
 @login.route("/sign_up", methods=["GET", "POST"])
 def sign_up():
     if request.method == "POST":
-        username = request.form["username"]
-        email = request.form["email"]
-        password = request.form["password"]
-        confirm_password = request.form["confirm"]
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "Dữ liệu không hợp lệ."}), 400
         
-        if not username or not email or not password or not confirm_password:
-            return "Vui lòng điền đầy đủ thông tin."
-        
-
-        if password != confirm_password:
-            return "Mật khẩu không khớp."
+        username = data.get("username")
+        email = data.get("email")
+        password = data.get("password")
+        confirm_password = data.get("confirm_password")
 
         try:
             cur = mysql.connection.cursor()
-
             cur.execute("SELECT * FROM user_pass WHERE username = %s", (username,))
             check_user = cur.fetchone()
-
             cur.execute("SELECT * FROM user_pass WHERE email = %s", (email,))
             check_email = cur.fetchone()
 
             if check_user:
-                return "Tên người dùng đã tồn tại."
+                return jsonify({"error": "Tên người dùng đã tồn tại."}), 400
 
             if check_email:
-                return "Email đã tồn tại."
-
+                return jsonify({"error": "Email đã tồn tại."}), 400
             password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
             cur.execute("INSERT INTO user_pass (username, email, password_hash) VALUES (%s, %s, %s)", (username, email, password_hash))
             mysql.connection.commit()
             cur.close()
-            return redirect(url_for("sign_in"))
+            return jsonify({"success": "Đăng ký thành công!"}), 200
 
         except Exception as e:
-            return f"Lỗi cơ sở dữ liệu: {e}"
-
+            return jsonify({"error": f"Lỗi cơ sở dữ liệu: {e}"}), 500
     return render_template("sign_up.html")
+
 
 @login.route("/sign_in", methods=["GET", "POST"])
 def sign_in():
     if request.method == "POST":
-        username = request.form.get("username")
-        password = request.form.get("password")
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "Dữ liệu không hợp lệ."}), 400
 
+        username = data.get("username")
+        password = data.get("password")
+        
         try:
             cur = mysql.connection.cursor()
             cur.execute("SELECT * FROM user_pass WHERE username = %s", (username,))
@@ -69,12 +67,13 @@ def sign_in():
             cur.close()
 
             if user and bcrypt.checkpw(password.encode('utf-8'), user[3].encode('utf-8')):
-                return "Đăng nhập thành công"
+                 return jsonify({"success": "Đăng nhập thành công"}), 200
+
             else:
-                return "Đăng nhập thất bại"
+                 return jsonify({"error": "Sai mật khẩu hoặc tên người dùng"}), 400
 
         except Exception as e:
-            return f"Lỗi cơ sở dữ liệu: {e}"
+            return jsonify({"error": f"Lỗi cơ sở dữ liệu: {e}"}), 400
 
     return render_template("sign_in.html")
 

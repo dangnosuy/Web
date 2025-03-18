@@ -100,7 +100,7 @@ body
 .form
 {
     background: transparent;
-    box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0px 0px 0px 1.1px rgba(255, 255, 255, 0.8);
     font-size: 15px;
     box-sizing: border-box;
     padding-block-start: 12px;
@@ -146,7 +146,7 @@ body
     color: #8b8b8bcc;
 }
 
-#submit
+.submit
 {
     background: transparent;
     background: linear-gradient( 90deg, #00c6ff, #7d51f1,#a855f7);
@@ -158,7 +158,7 @@ body
     width: 100%;
     border-radius: 25px;
     padding: 15px 15px;
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .eye i
@@ -182,33 +182,34 @@ body
     -webkit-text-fill-color: transparent;
 }
 
-#submit:hover
+.submit:hover
 {
     transform: scale(1.05);
 }
 
-.sign_up
+.register
 {
     margin-top: 15px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
-.sign_up a span
+.register a span
 {
     color:#f5f5f5;
     text-decoration: underline;
 }
 
-.sign_up a span:hover
+.register a span:hover
 {
     background: linear-gradient( 90deg, #00c6ff,#a855f7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.google
+.other
 {
-    box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0px 0px 0px 1.1px rgba(255, 255, 255, 0.8);
     border-radius: 25px;
     padding: 10px 10px;
     text-align: center;
@@ -218,24 +219,7 @@ body
     cursor: pointer;
 }
 
-.facebook
-{
-    box-shadow: inset 0px 0px 0px 2px rgba(255, 255, 255, 0.5);
-    border-radius: 25px;
-    padding: 10px 10px;
-    text-align: center;
-    margin-top: 15px;
-    font-weight: bolder;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.facebook:hover
-{
-    transform: scale(1.05);
-}
-
-.google:hover
+.other:hover
 {
     transform: scale(1.05);
 }
