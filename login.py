@@ -1,84 +1,89 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
-from flask_mysqldb import MySQL
-import hashlib
-import os
-import bcrypt
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import bcrypt, pymysql
 
 login = Flask(__name__)
-login.secret_key = "secret_key"
+CORS(login)
 
-login.config['MYSQL_HOST'] = 'localhost'
-login.config['MYSQL_USER'] = 'root'
-login.config['MYSQL_PASSWORD'] = '2104230122'
-login.config['MYSQL_DB'] = 'web_database'
+connection = pymysql.connect(
+    host='localhost',
+    user='root',
+    password='2104230122',
+    database='texttoeverything',
+    charset='utf8mb4',
+    cursorclass=pymysql.cursors.DictCursor
+)
 
-mysql = MySQL(login)
+try:
+    with connection.cursor() as cursor:
+        create_user_table = """CREATE TABLE IF NOT EXISTS user_pass (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(255) UNIQUE NOT NULL,
+            email VARCHAR(255) UNIQUE NOT NULL,
+            password_hash VARCHAR(255) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        )"""
+        cursor.execute(create_user_table)
+except Exception as e:
+    print("Error creating user table: ", e)
 
-@login.route("/sign_up", methods=["GET", "POST"])
+connection.commit()
+
+@login.route("/api/sign_up", methods=["POST"])
 def sign_up():
-    if request.method == "POST":
-        data = request.get_json()
-        if not data:
-            return jsonify({"error": "Dữ liệu không hợp lệ."}), 400
-        
-        username = data.get("username")
-        email = data.get("email")
-        password = data.get("password")
-        confirm_password = data.get("confirm_password")
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid data."}), 400
+    login.logger.info(f"Data: {data}")
+    username = data.get("username")
+    email = data.get("email")
+    password = data.get("password")
 
-        try:
-            cur = mysql.connection.cursor()
-            cur.execute("SELECT * FROM user_pass WHERE username = %s", (username,))
-            check_user = cur.fetchone()
-            cur.execute("SELECT * FROM user_pass WHERE email = %s", (email,))
-            check_email = cur.fetchone()
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM user_pass WHERE username = %s", (username,))
+            check_user = cursor.fetchone()
+            cursor.execute("SELECT * FROM user_pass WHERE email = %s", (email,))
+            check_email = cursor.fetchone()
 
             if check_user:
-                return jsonify({"error": "Tên người dùng đã tồn tại."}), 400
+                return jsonify({"error": "Username already exists."}), 400
 
             if check_email:
-                return jsonify({"error": "Email đã tồn tại."}), 400
+                return jsonify({"error": "Email already exists."}), 400
+
             password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            cursor.execute("INSERT INTO user_pass (username, email, password_hash) VALUES (%s, %s, %s)", (username, email, password_hash))
+            connection.commit()
+            return jsonify({"success": "Registration successful!"}), 200
 
-            cur.execute("INSERT INTO user_pass (username, email, password_hash) VALUES (%s, %s, %s)", (username, email, password_hash))
-            mysql.connection.commit()
-            cur.close()
-            return jsonify({"success": "Đăng ký thành công!"}), 200
+    except Exception as e:
+        login.logger.error(f"Error during registration: {e}")
+        return jsonify({"error": "loil"}), 500
 
-        except Exception as e:
-            return jsonify({"error": f"Lỗi cơ sở dữ liệu: {e}"}), 500
-    return render_template("sign_up.html")
-
-
-@login.route("/sign_in", methods=["GET", "POST"])
+@login.route("/api/sign_in", methods=["POST"])
 def sign_in():
-    if request.method == "POST":
-        data = request.get_json()
-        if not data:
-            return jsonify({"error": "Dữ liệu không hợp lệ."}), 400
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid data."}), 400
 
-        username = data.get("username")
-        password = data.get("password")
-        
-        try:
-            cur = mysql.connection.cursor()
-            cur.execute("SELECT * FROM user_pass WHERE username = %s", (username,))
-            user = cur.fetchone()
-            cur.close()
+    username = data.get("username")
+    password = data.get("password")
 
-            if user and bcrypt.checkpw(password.encode('utf-8'), user[3].encode('utf-8')):
-                 return jsonify({"success": "Đăng nhập thành công"}), 200
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM user_pass WHERE username = %s", (username,))
+            user = cursor.fetchone()
 
+            if user and bcrypt.checkpw(password.encode('utf-8'), user['password_hash'].encode('utf-8')):
+                return jsonify({"success": "Login successful"}), 200
             else:
-                 return jsonify({"error": "Sai mật khẩu hoặc tên người dùng"}), 400
+                return jsonify({"error": "Incorrect username or password"}), 400
 
-        except Exception as e:
-            return jsonify({"error": f"Lỗi cơ sở dữ liệu: {e}"}), 400
-
-    return render_template("sign_in.html")
+    except Exception as e:
+        login.logger.error(f"Error during login: {e}")
+        return jsonify({"error": f"Database error: {e}"}), 400
 
 if __name__ == "__main__":
-    login.run(debug=True)
-    
-    
-    
+    login.run(host='0.0.0.0', port=5550, debug=True)
