@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <title>AI Tools</title>
+    <link rel="stylesheet" href="speech.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img
+          src="img/speech1.jpg"
+          alt="Text to speech"
+          width="100px"
+          height="100px"
+        />
+        <span class="logo_speech_text">Text to speech</span>
+      </div>
+      <nav class="menu">
+        <a href="#">Home</a>
+        <a href="#">Text to Image</a>
+        <a href="#">Text to Video</a>
+        <a href="#">Text to Speech</a>
+      </nav>
+    </header>
+    <main>
+      <div class="text-input-container">
+        <label for="textInput">Text Input</label>
+        <textarea
+          id="textInput"
+          placeholder="Enter text to convert to speech"
+        ></textarea
+        ><br />
+        <div class="change">
+          <select
+            id="language"
+            name="language"
+            onchange="changeLanguage()"
+            required
+          >
+            <option value="vi" selected>Tiếng Việt</option>
+            <option value="en">United States</option>
+            <option value="pt">Brazil</option>
+            <option value="ko">Korea</option>
+            <option value="zh">China</option>
+            <option value="jv">Japan</option>
+            <option value="it">Italy</option>
+            <option value="es">Spain</option>
+            <option value="fr">France</option>
+            <option value="en">United Kingdom</option></select
+          ><br />
+          <select id="voice" name="voice" onchange="changeVoice ()" required>
+            <option value="vi" selected>Male voice</option>
+            <option value="vi">Female voice</option></select
+          ><br />
+          <div class="next">
+            <button class="Generate">Generate</button><br />
+            <button class="Clear">Clear</button>
+          </div>
+        </div>
+      </div>
+      <div class="output-container">
+        <label for="Recordings" class="tilte">Recordings</label>
+        <div class="recording-item">
+          <div class="recording-info">
+            <span class="recording-title">Recording 1</span>
+            <audio class="audio-play" controls>
+              <source src="your-audio-file.mp3" type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+        <button class="download">Download</button>
+      </div>
+      <br />
+      <div class="chat-history collapsed">
+        <div class="history-toggle" id="historyToggle">
+          <i class="fa-solid fa-chevron-right" id="toggleIcon"></i>
+        </div>
+        <h3 class="history-title">History</h3>
+        <div class="history-item active">
+          <p>Đoạn chat 1</p>
+          <small>2 hours ago</small>
+        </div>
+        <div class="history-item">
+          <p>Đoạn chat 2</p>
+          <small>Yesterday</small>
+        </div>
+        <div class="history-item">
+          <p>Đoạn chat 3</p>
+          <small>3 days ago</small>
+        </div>
+        <div class="history-item">
+          <p>Đoạn chat 4</p>
+          <small>Last week</small>
+        </div>
+      </div>
+    </main>
+    <script>
+      // Toggle history sidebar
+      const historyToggle = document.getElementById("historyToggle");
+      const toggleIcon = document.getElementById("toggleIcon");
+      const chatHistory = document.querySelector(".chat-history");
+      const workspace = document.querySelector(".workspace");
+
+      historyToggle.addEventListener("click", function () {
+        chatHistory.classList.toggle("collapsed");
+        workspace.classList.toggle("expanded");
+      });
+    </script>
+  </body>
+</html>
