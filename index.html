@@ -6,6 +6,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <title>AI Tools</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
     <header>
@@ -16,7 +20,7 @@
       <nav class="menu">
         <a href="#">Home</a>
         <a href="#">Text to Image</a>
-        <a href="#">Text to Video</a>
+        <a href="Music.html">Text to Music</a>
         <a href="speech.html">Text to Speech</a>
       </nav>
       <button class="login-button">Login</button>
@@ -29,21 +33,21 @@
       </h5>
 
       <section class="features">
-        <div class="feature">
+        <a href="image.html" class="feature">
           <div class="icon">
             <img src="img/text-to-image.png" alt="Text to Image" />
           </div>
           <h2>Text to Image</h2>
           <p>Transform your text descriptions into stunning visual artwork</p>
-        </div>
+        </a>
 
-        <div class="feature">
+        <a href="music.html" class="feature">
           <div class="icon">
-            <img src="img/video3.jpg" alt="Text to Video" />
+            <img src="img/video3.jpg" alt="Text to Music" />
           </div>
-          <h2>Text to Video</h2>
-          <p>Create engaging videos from your text content</p>
-        </div>
+          <h2>Text to Music</h2>
+          <p>Create engaging music from your text content</p>
+        </a>
 
         <a href="speech.html" class="feature">
           <div class="icon">
@@ -90,14 +94,10 @@
         </div>
       </div>
     </section>
-    <div class="feedback-container">
-      <div class="feedback-box">
-        <h2>Hãy cho chúng tôi biết ý kiến của bạn</h2>
-        <p>Chúng tôi luôn lắng nghe để cải thiện dịch vụ tốt hơn!</p>
-        <a href="feedback.html" target="_blank" class="feedback-btn"
-          >Feedback</a
-        >
-      </div>
+    <div class="feedback">
+      <a href="feedback.html" target="_blank" class="feedback-btn"
+        ><i class="fas fa-comment"></i> Feedback</a
+      >
     </div>
   </body>
 </html>
