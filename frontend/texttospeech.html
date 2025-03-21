@@ -15,7 +15,7 @@
       </button>
       <div class="logo">
         <img
-          src="{{ url_for('static', filename='images/images2.jpg') }}"
+          src=""
           alt="Text to Image"
           width="50px"
           height="50px"
@@ -141,7 +141,7 @@
         audioElement.src = "";
 
         try {
-          const response = await fetch("/tts", {
+          const response = await fetch("/api/tts", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
@@ -203,9 +203,15 @@
       async function loadHistory(username) {
         try {
           const response = await fetch(
-            `/api/history?username=${encodeURIComponent(username)}`
+            `/api/history/tts?username=${encodeURIComponent(username)}`
           );
-          const historyData = await response.json();
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          } 
+
+          const data= await response.json();
+          const historyData = data.history;
 
           const historyContainer = document.querySelector(".chat-history");
 
