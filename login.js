@@ -80,7 +80,7 @@ async function Send_signin() {
         return;
     }
 
-    localStorage.setItem(username, json);
+    const data = {username, password};
     try {
         const response = await fetch("/sign_in", {
         method: "POST",
