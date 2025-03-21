@@ -100,7 +100,22 @@ body
 .form
 {
     background: transparent;
-    box-shadow: inset 0px 0px 0px 1.1px rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0px 0px 0px 0.8px rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    box-sizing: border-box;
+    padding-block-start: 12px;
+    padding-block-end: 10px;
+    min-block-size: 40px;
+    border: 0;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.form_error
+{
+    background: transparent;
+    box-shadow: inset 0px 0px 0px 1.9px rgba(255, 0, 0, 1);
     font-size: 15px;
     box-sizing: border-box;
     padding-block-start: 12px;
@@ -123,6 +138,13 @@ body
 }
 
 .form i
+{
+    font-size: 15px;
+    color: #cccccc;
+    padding-left: 10px;
+}
+
+.form_error i
 {
     font-size: 15px;
     color: #cccccc;
@@ -209,7 +231,7 @@ body
 
 .other
 {
-    box-shadow: inset 0px 0px 0px 1.1px rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0px 0px 0px 0.8px rgba(255, 255, 255, 0.8);
     border-radius: 25px;
     padding: 10px 10px;
     text-align: center;

@@ -24,7 +24,7 @@
             <div class="group">
                 <label for="username" >Username</label>
                 <br>
-                <div class="form">
+                <div class="form" id="check_username">
                     <i class="far fa-user"></i>
                     <input id="username" type="text" class="input" placeholder="Enter username">  
                 </div>
@@ -32,7 +32,7 @@
             <div class="group">
                 <label class="UserPass" for="password">Password</label>
                 <br>
-                <div class="form">
+                <div class="form" id="check_password">
                     <i class="fa fa-key"></i>
                     <input id="password" type="password" class="input" placeholder="Enter password">  
                     <div class="eye">
@@ -50,7 +50,7 @@
             <button type="submit" class="submit" id="sign_in">Sign In</button>
             <div class="register">
                 <span>Don't have an account?</span>
-                <a href="./sign_up">
+                <a href="./Sign_up.html">
                     <span >Sign up for AI Tools</span>
                 </a>
             </div>        
@@ -67,5 +67,6 @@
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="../static/login.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+<script src="login.js"></script>
 </html>
