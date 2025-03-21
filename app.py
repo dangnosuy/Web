@@ -1,13 +1,40 @@
-from flask import Flask, request, send_file, render_template, jsonify, send_from_directory
-import asyncio
+import pymysql, asyncio, datetime, os, random
+from flask import Flask, request, jsonify, send_from_directory, render_template
+from flask_cors import CORS
 import edge_tts
-import random
-import os
-from db_config import get_connection
-from datetime import datetime
 
-app = Flask(__name__)
+app = Flask(_name_)
+CORS(app)
 
+# Kết nối đến database
+connection = pymysql.connect(
+    host='localhost',
+    user='dangnosuy',
+    password='dangnosuy',
+    database='texttoeverything',
+    charset='utf8mb4',
+    cursorclass=pymysql.cursors.DictCursor
+)
+
+# Tạo bảng CHAT nếu chưa tồn tại
+try:
+    with connection.cursor() as cursor:
+        create_table = """
+            CREATE TABLE IF NOT EXISTS CHAT (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                username VARCHAR(255),
+                prompt TEXT,
+                type VARCHAR(50),
+                result_path VARCHAR(255),
+                create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """
+        cursor.execute(create_table)
+    connection.commit()
+except Exception as e:
+    print("Error creating table: ", e)
+
+# Map giọng đọc theo ngôn ngữ và giới tính
 VOICE_MAP = {
     "vi": {"male": "vi-VN-NamMinhNeural", "female": "vi-VN-HoaiMyNeural"},
     "en": {"male": "en-US-GuyNeural", "female": "en-US-AriaNeural"},
@@ -21,80 +48,79 @@ VOICE_MAP = {
     "en-kd": {"male": "en-GB-RyanNeural", "female": "en-GB-LibbyNeural"},
 }
 
-@app.route("/tts", methods=["POST"])
+def insert_to_db(username, prompt, conv_type, result_path):
+    try:
+        with connection.cursor() as cursor:
+            sql = "INSERT INTO CHAT (username, prompt, type, result_path) VALUES (%s, %s, %s, %s)"
+            cursor.execute(sql, (username, prompt, conv_type, result_path))
+        connection.commit()
+        return True
+    except Exception as e:
+        app.logger.error(f"DB Insert error: {e}")
+        return False
+
+@app.route('/api/tts', methods=['POST'])
 def tts():
-    data = request.json
+    data = request.get_json()
+    app.logger.info("Dữ liệu nhận được từ client: %s", data)
+    
     text = data.get("text")
     language = data.get("language")
     gender = data.get("gender")
     username = data.get("username")
-
+    
     voice = VOICE_MAP.get(language, {}).get(gender)
     if not voice:
-        return "Invalid voice selection", 400
+        return jsonify({"success": False, "error": "Invalid voice selection"}), 400
 
-    os.makedirs("outputs/audio", exist_ok=True)
-    output_file = f"outputs/audio/{random.randint(1, 1000000)}.mp3"
-
-    async def generate_and_insert():
-        # Tạo file âm thanh
+    output_file = f"mp3/{username}_{datetime.datetime.now().strftime('%Y%m%dT%H%M%S')}.mp3"
+    
+    async def generate_audio_and_insert():
+        # Tạo file âm thanh từ edge_tts
         communicate = edge_tts.Communicate(text, voice)
         await communicate.save(output_file)
-
-        # Ghi vào DB
-        conn = get_connection()
-        cursor = conn.cursor()
-
-        sql = """
-            INSERT INTO history (username, input_text, conversion_type, result)
-            VALUES (%s, %s, %s, %s)
-        """
-        values = (username, text, "tts", output_file)
-        cursor.execute(sql, values)
-        conn.commit()
-
+        
+        # Chèn thông tin vào DB
+        insert_to_db(username, text, "text_to_speech", output_file)
+        
         # Lấy timestamp của dòng vừa insert
-        cursor.execute("SELECT timestamp FROM history WHERE id = LAST_INSERT_ID()")
-        timestamp = cursor.fetchone()[0]
-
-        cursor.close()
-        conn.close()
-
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT create_at FROM CHAT WHERE id = LAST_INSERT_ID()")
+            row = cursor.fetchone()
+            if row and 'create_at' in row:
+                timestamp = int(row['create_at'].timestamp() * 1000)
+            else:
+                timestamp = int(datetime.datetime.now().timestamp() * 1000)
         return {
             "username": username,
             "input_text": text,
-            "conversion_type": "tts",
+            "conversion_type": "text_to_speech",
             "result": output_file,
-            "timestamp": int(timestamp.timestamp() * 1000)
+            "timestamp": timestamp
         }
-
-    result = asyncio.run(generate_and_insert())
+    
+    result = asyncio.run(generate_audio_and_insert())
     return jsonify(result)
 
-@app.route("/")
-def index():
-    return render_template("texttospeech.html")
-
-
-# API to get history
-@app.route('/api/history', methods=['GET'])
+@app.route('/api/history/tts', methods=['GET'])
 def get_history():
     username = request.args.get('username')
-    conn= get_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM history WHERE username=%s ORDER BY timestamp DESC", (username,))
-    history = cursor.fetchall()
-    # Convert timestamp to milliseconds
-    for item in history:
-        if isinstance(item['timestamp'], datetime):
-            item['timestamp'] = int(item['timestamp'].timestamp() * 1000)  # milliseconds
+    conv_type = "text_to_speech"
+    try:
+        with connection.cursor() as cursor:
+            if conv_type:
+                cursor.execute("SELECT * FROM CHAT WHERE username=%s AND type=%s ORDER BY create_at DESC", (username, conv_type))
+            else:
+                cursor.execute("SELECT * FROM CHAT WHERE username=%s ORDER BY create_at DESC", (username,))
+            history = cursor.fetchall()
+            # Chuyển timestamp sang mili giây
+            for item in history:
+                if isinstance(item['create_at'], datetime.datetime):
+                    item['create_at'] = int(item['create_at'].timestamp() * 1000)
+        return jsonify({"success": True, "history": history}), 200
+    except Exception as e:
+        app.logger.error(f"Error fetching history: {e}")
+        return jsonify({"success": False, "error": str(e)}), 500
 
-    return jsonify(history)
-
-# API to get audio file
-@app.route('/outputs/audio/<filename>')
-def serve_audio(filename):
-    return send_from_directory('outputs/audio', filename)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == "_main_":
+    app.run(host='0.0.0.0', port=5550, debug=True)
