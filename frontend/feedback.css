@@ -1,0 +1,137 @@
+body {
+  background: url('da4cjzh-194664d8-9758-4a00-aa52-0b2d662d9e58.gif') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  text-align: center;
+  gap: 20px;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  color: rgb(201, 202, 206);
+}
+h3 {
+  color: #846ebc;
+}
+.notifi-rating {
+  margin-top: 20px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 40px;
+}
+
+.Share_feedback {
+  background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 200px;
+  height: 60px;
+}
+.View_history {
+  background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 200px;
+  height: 60px;
+}
+.button {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#feedback {
+  display: block;
+  flex-direction: column;
+  align-items: center; /* Căn giữa nội dung form */
+  justify-content: center;
+  width: 90%;
+  max-width: 500px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  color: #444;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%; /* Đảm bảo input luôn vừa khung */
+  padding: 10px;
+  border: 1px solid #d4e2ff;
+  border-radius: 5px;
+  background-color: #e8f0fe;
+  font-size: 16px;
+  color: #333;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.rating {
+  display: block;
+  justify-content: center;
+  gap: 10px;
+}
+
+.star {
+  font-size: 30px;
+  color: lightgray;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.sao {
+  gap: 20px;
+}
+.star:hover,
+.star.active {
+  color: gold;
+}
+#feedbackText {
+    border: 2px solid #250f5c;
+    border-radius: 3px;
+    width: 95%;
+    resize: vertical;
+    padding: 10px;
+    font-size: 18x;
+}
+.submit {
+  margin-top: 10px;
+  background-color: rgb(33, 81, 191);
+  width: 40%;
+  height: 35px;
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
+}
+.write {
+  display: block;
+}
+#rating-value {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}

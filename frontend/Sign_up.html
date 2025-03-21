@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <title>Sign up | AI Tools</title>
+</head>
+<body>
+    <div id="wraper">
+        <form id="login_register">
+            <div class="control">
+                <a href="./Sign_in.html" class="return">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <a href="#" class="exit">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+            </div>
+            <div class="logo">
+                <img class="image_logo" src="../static/logo.png">
+                <span class="name_logo"> AI Tools</span>
+            </div>
+            <h1 class="heading"> Sign up to Your Account</h1>
+            <div class="group">
+                <label for="username" >Username</label>
+                <br>
+                <div class="form" id="check_username">
+                    <i class="far fa-user"></i>
+                    <input type="text" class="input" id="username" placeholder="Enter username">  
+                </div>
+            </div>
+            <div class="group">
+                <label class="UserPass" for="email">Email</label>
+                <br>
+                <div class="form" id="check_email">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" class="input" id="email" placeholder="Enter email">  
+                </div>
+            </div>
+            <div class="group">
+                <label class="UserPass" for="password">Password</label>
+                <br>
+                <div class="form" id="check_password">
+                    <i class="fa fa-key"></i>
+                    <input type="password" class="input" id="password" placeholder="Create password">  
+                    <div class="eye">
+                        <i class="far fa-eye"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="group">
+                <label class="UserPass" for="Confirm password">Confirm password</label>
+                <br>
+                <div class="form" id="check_confirm">
+                    <i class="fa fa-key"></i>
+                    <input type="password" class="input" id="confirm" placeholder="Confirm password"> 
+                    <div class="eye">
+                        <i class="far fa-eye"></i>
+                    </div>
+                </div>
+            </div>
+                <button type="submit" class="submit" id="sign_up">Sign Up</button>
+                </div>
+            </div>
+        </from>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+<script src="login.js"></script>
+</html>
