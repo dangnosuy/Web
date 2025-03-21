@@ -16,7 +16,7 @@ connection = pymysql.connect(
 
 try:
     with connection.cursor() as cursor:
-        create_user_table = """CREATE TABLE IF NOT EXISTS user_pass (
+        create_user_table = """CREATE TABLE IF NOT EXISTS USERS (
             id INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(255) UNIQUE NOT NULL,
             email VARCHAR(255) UNIQUE NOT NULL,
@@ -38,29 +38,25 @@ def sign_up():
     login.logger.info(f"Data: {data}")
     username = data.get("username")
     email = data.get("email")
-    password = data.get("password")
+    password_hash = data.get("password_hash")
 
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM user_pass WHERE username = %s", (username,))
-            check_user = cursor.fetchone()
-            cursor.execute("SELECT * FROM user_pass WHERE email = %s", (email,))
-            check_email = cursor.fetchone()
+            cursor.execute("SELECT * FROM USERS WHERE username = %s", (username,))
+            check_username = cursor.fetchone() 
+            cursor.execute("SELECT * FROM USERS WHERE email = %s", (email,))
+            check_email = cursor.fetchone() 
 
-            if check_user:
-                return jsonify({"error": "Username already exists."}), 400
+            if check_username or check_email:
+                return jsonify({"success": False }), 400    
 
-            if check_email:
-                return jsonify({"error": "Email already exists."}), 400
-
-            password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-            cursor.execute("INSERT INTO user_pass (username, email, password_hash) VALUES (%s, %s, %s)", (username, email, password_hash))
+            cursor.execute("INSERT INTO USERS (username, email, password_hash) VALUES (%s, %s, %s)", (username, email, password_hash))
             connection.commit()
-            return jsonify({"success": "Registration successful!"}), 200
+            return jsonify({"success": True}), 200
 
     except Exception as e:
         login.logger.error(f"Error during registration: {e}")
-        return jsonify({"error": "loil"}), 500
+        return jsonify({"error": f"Database error: {e}"}), 500
 
 @login.route("/api/sign_in", methods=["POST"])
 def sign_in():
@@ -69,14 +65,14 @@ def sign_in():
         return jsonify({"error": "Invalid data."}), 400
 
     username = data.get("username")
-    password = data.get("password")
+    password_hash = data.get("password_hash")
 
     try:
         with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM user_pass WHERE username = %s", (username,))
+            cursor.execute("SELECT * FROM USERS WHERE username = %s", (username,))
             user = cursor.fetchone()
 
-            if user and bcrypt.checkpw(password.encode('utf-8'), user['password_hash'].encode('utf-8')):
+            if user and password_hash == user['password_hash']:
                 return jsonify({"success": "Login successful"}), 200
             else:
                 return jsonify({"error": "Incorrect username or password"}), 400
