@@ -337,7 +337,7 @@ audio{
   header {
     position: relative;
     flex-direction: column;
-    padding: 1rem;
+    padding: 2rem 1rem;
     min-height: 100px;
   }
 
@@ -366,7 +366,7 @@ audio{
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 20px;
     display: none;
   }
 
@@ -438,14 +438,12 @@ audio{
 @media (max-width: 480px) {
   header {
     flex-direction: column;
-    padding: 1rem;
   }
 
   .menu {
     flex-wrap: wrap;
     justify-content: center;
     gap: 0.5rem;
-    margin-top: 50px;
   }
 
   .menu a {
