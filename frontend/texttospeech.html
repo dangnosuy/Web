@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text To Speech | AlchemistAI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="texttospeech.css" />
+  </head>
+  <body>
+    <header>
+      <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="logo">
+        <img
+          src="img_source/logo.png"
+          alt="Text to Image"
+          width="50px"
+          height="50px"
+        />
+        <span class="logo_speech_text">Text to Speech</span>
+      </div>
+      <nav class="menu">
+        <a href="index.html">Home</a>
+        <a href="texttoimage.html" >Text to Image</a>
+        <a href="texttomusic.html">Text to Music</a>
+        <a href="#" class="active">Text to Speech</a>
+      </nav>
+      <div class="avatar-container">
+        <img src="img_source/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg">
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="profile.html" class="dropdown-menu-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="settings.html" class="dropdown-menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="Sign_in.html" class="dropdown-menu-item logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Đăng xuất</span>
+          </a>
+        </div>
+      </div>
+    </div>
+      
+    </header>
+    <main>
+      <!-- Main Workspace -->
+      <div class="workspace">
+        <div class="text-input-container hover:transform hover:scale-[1.02] transition-all duration-300">
+          <label for="textInput">Text input</label>
+          <textarea
+            id="textInput"
+            placeholder="Enter text to convert to speech"
+          ></textarea>
+          <div class="controls">
+            <div class="params">
+              <select id="language" name="language" class="p-2 sm:p-2 text-sm sm:text-base border rounded-lg bg-white/5 text-teal-300 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-teal-500">
+              <option value="vi" selected class="bg-[#0f0149] text-white">Tiếng Việt</option>
+              <option value="en" class="bg-[#0f0149] text-white">English (US)</option>
+              <option value="en-kd" class="bg-[#0f0149] text-white">English (UK)</option>
+              <option value="pt" class="bg-[#0f0149] text-white">Brazil</option>
+              <option value="ko" class="bg-[#0f0149] text-white">Korea</option>
+              <option value="zh" class="bg-[#0f0149] text-white">China</option>
+              <option value="ja" class="bg-[#0f0149] text-white">Japan</option>
+              <option value="it" class="bg-[#0f0149] text-white">Italy</option>
+              <option value="es" class="bg-[#0f0149] text-white">Spain</option>
+              <option value="fr" class="bg-[#0f0149] text-white">France</option>
+            </select>
+        
+              <select id="gender" name="voice" class="p-2 border rounded-lg bg-white/5 text-teal-300 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-teal-500">
+                <option value="male" selected class="bg-[#0f0149] text-white">Male voice</option>
+                <option value="female" class="bg-[#0f0149] text-white">Female voice</option>
+              </select>
+            </div>
+            <div class="actions">
+              <button id="generateBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30">Generate</button>
+              <button id="clearBtn" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/30" >Clear</button>
+            </div>
+          </div>
+        </div>
+        <div class="output-container hover:transform hover:scale-[1.02] transition-all duration-300">
+          <label for="Recordings" class="tilte">Recordings</label>
+            <div class="recording-item">
+              <audio id="audio-player" controls src="">
+                <source src="" type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+        </div>
+      </div>
+      <div class="extension">
+          <!-- Chat History Sidebar -->
+       <div class="chat-history hover:transform hover:scale-[1.02] transition-all duration-300">
+      <h3 class="history-title">History</h3>
+    </div>
+    </div>
+    </main>
+    
+    <script>
+     // Avatar dropdown functionality
+      const avatarImg = document.getElementById('avatarImg');
+      const dropdownMenu = document.getElementById('dropdownMenu');
+      
+      // Toggle dropdown when avatar is clicked
+      avatarImg.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('active');
+      });
+      
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!avatarImg.contains(e.target) && !dropdownMenu.contains(e.target)) {
+          dropdownMenu.classList.remove('active');
+        }
+      });
+      
+      // Add click events for menu items
+      document.querySelectorAll('.dropdown-menu-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const action = this.querySelector('span').textContent;
+          alert(`You clicked: ${action}`);
+          dropdownMenu.classList.remove('active');
+        });
+      });
+
+       // Mobile menu toggle
+      const menuToggle = document.querySelector('.menu-toggle');
+      const menu = document.querySelector('.menu');
+
+      document.addEventListener('click', function(e) {
+      
+      if (menuToggle.contains(e.target)) {
+          menu.classList.toggle('active');
+      }
+      else if (!menu.contains(e.target)) {
+          menu.classList.remove('active');
+      }
+      });
+    </script> 
+    <script src="texttospeech.js"></script>
+  </body>
+</html>

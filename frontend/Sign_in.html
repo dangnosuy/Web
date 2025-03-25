@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <title>Sign in | AlchemistAI</title>
+</head>
+<body>
+    <div id="wraper">
+        <form id="login_register">
+            <div class="control">
+                <a href="#" class="exit">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+            </div>
+            <div class="logo">
+                <img class="image_logo" src="">
+                <span class="name_logo">AlchemistAI</span>
+            </div>
+            <h1 class="heading"> Sign in to Your Account</h1>
+            <div class="group">
+                <label for="username" >Username</label>
+                <br>
+                <div class="form" id="check_username">
+                    <i class="far fa-user"></i>
+                    <input id="username" type="text" class="input" placeholder="Enter username">  
+                </div>
+            </div>
+            <div class="group">
+                <label class="UserPass" for="password">Password</label>
+                <br>
+                <div class="form" id="check_password">
+                    <i class="fa fa-key"></i>
+                    <input id="password" type="password" class="input" placeholder="Enter password">  
+                    <div class="eye">
+                        <i class="far fa-eye"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="reset_password">
+                <input type="checkbox" id="rememberMe" name="rememberMe">
+                <label for="rememberMe">Remember me</label>
+                <a href="">
+                    <span>Forgot your password?</span>                    
+                </a>
+            </div>    
+            <button type="submit" class="submit" id="sign_in">Sign In</button>
+            <div class="register">
+                <span>Don't have an account?</span>
+                <a href="./Sign_up.html">
+                    <span >Sign up for AlchemistAI</span>
+                </a>
+            </div>        
+            <hr>
+            <div class="other">
+                <i class="fa-brands fa-google"></i>
+                <span>Google</span>
+            </div>
+            <div class="other">
+                <i class="fa-brands fa-facebook-f"></i>
+                <span>Facebook</span>
+            </div>
+        </form>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+<script src="login.js"></script>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+    <title>AlchemistAI</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="img_source/logo.png" alt="Web đồ án" />
+        <span class="logo_text">AlchemistAI</span>
+      </div>
+      <nav class="menu">
+        <a href="index.html">Home</a>
+        <a href="texttoimage.html">Text to Image</a>
+        <a href="#">Text to Music</a>
+        <a href="texttospeech.html">Text to Speech</a>
+      </nav>
+      <a href="sign_in.html" id="sign_in" class="login-button">Login</a>
+      <div class="avatar-container hidden">
+        <img src="img_source/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg" />
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-menu-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-menu-item logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Đăng xuất</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <h1 class="main-title">Transform Your Ideas with AI</h1>
+      <h5 class="sub-title">
+        Convert text to images, videos, and speech with our powerful AlchemistAI
+      </h5>
+
+      <section class="features">
+        <a href="image.html" class="feature">
+          <div class="icon">
+            <img src="img_source/Image.png" alt="Text to Image" />
+          </div>
+          <h2>Text to Image</h2>
+          <p>Transform your text descriptions into stunning visual artwork</p>
+        </a>
+
+        <a href="texttomusic.html" class="feature">
+          <div class="icon">
+            <img src="img_source/Music.png" alt="Text to Music" />
+          </div>
+          <h2>Text to Music</h2>
+          <p>Create engaging music from your text content</p>
+        </a>
+
+        <a href="texttospeech.html" class="feature">
+          <div class="icon">
+            <img src="img_source/Speech.png" alt="Text to Speech" />
+          </div>
+          <h2>Text to Speech</h2>
+          <p>Convert your text into natural-sounding speech</p>
+        </a>
+      </section>
+    </main>
+    <section class="them">
+      <p class="gioithieu">ALL YOU NEED</p>
+      <h2 class="tieude">What are the features of AlchemistAI?</h2>
+      <div class="icon-container">
+        <div class="feature-item">
+          <div class="icon">
+            <i class="fa-solid fa-waveform"></i>
+          </div>
+          <h3>Real AI Voice</h3>
+          <p>
+            Built on deep learning and groundbreaking AI research to create audio that is incredibly close to the quality of a real human voice.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="icon">
+            <i class="fa-solid fa-language"></i>
+          </div>
+          <h3>Multiple languages ​​and AI voices</h3>
+          <p>
+            Is a professional AI Voice Generator, with 10 languages. Both male and female voices are available.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="icon">
+            <i class="fa-solid fa-headphones"></i>
+          </div>
+          <h3>Easily convert text to audio</h3>
+          <p>
+            Copy and paste an existing script or type text to create an AI voice of your choice from AlchemistAI voice library.
+          </p>
+        </div>
+        <div class="feature-item">
+          <div class="icon">
+            <i class="fa-solid fa-image"></i>
+          </div>
+          <h3>Variety of photo styles</h3>
+          <p>
+            Explore different art styles and turn your ideas into beautiful works of art with 6 different styles!
+          </p>
+        </div>
+      </div>
+    </section>
+    <div class="feedback">
+      <a href="feedback.html" target="_blank" class="feedback-btn"
+        ><i class="fas fa-comment"></i> Feedback</a
+      >
+    </div>
+    <hr />
+  </body>
+  <script>
+    const avatarImg = document.getElementById("avatarImg");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    avatarImg.addEventListener("click", function (e) {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("active");
+    });
+    document.addEventListener("click", function (e) {
+      if (!avatarImg.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove("active");
+      }
+    });
+    document.querySelectorAll(".dropdown-menu-item").forEach((item) => {
+      item.addEventListener("click", function () {
+        const action = this.querySelector("span").textContent;
+        dropdownMenu.classList.remove("active");
+      });
+    });
+    const menuToggle = document.querySelector(".menu-toggle");
+    const menu = document.querySelector(".menu");
+
+    document.addEventListener("click", function (e) {
+      if (menuToggle.contains(e.target)) {
+        menu.classList.toggle("active");
+      } else if (!menu.contains(e.target)) {
+        menu.classList.remove("active");
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      if (sessionStorage.getItem("loggedIn") === "true") {
+        document.querySelector(".avatar-container").classList.remove("hidden");
+        document.querySelector(".login-button").classList.add("hidden");
+      } else {
+        document.querySelector(".avatar-container").classList.add("hidden");
+        document.querySelector(".login-button").classList.remove("hidden");
+      }
+    });
+  </script>
+</html>

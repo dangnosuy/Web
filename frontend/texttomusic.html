@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text to music</title>
+    <link rel="stylesheet" href="music.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo_music">
+        <img src="img_source/tomusic1.png" alt="music" width="300px" height="100px" />
+      </div>
+      <nav class="menu">
+        <a href="#">Home</a>
+        <a href="#">Text to Image</a>
+        <a href="#">Text to Music</a>
+        <a href="#">Text to Speech</a>
+      </nav>
+    </header>
+    <h1>Text to music Generator free online</h1>
+    <div class="main">
+      <label for="TextInput">Song Description</label>
+      <div id="text-container">
+        <textarea
+          id="textInput"
+          placeholder="Create your AI Music now"
+        ></textarea>
+      </div>
+      <div class="change">
+        <select id="style" name="style" required>
+          <option value="lofi" selected>Lofi</option>
+          <option value="remix">Remix</option>
+          <option value="mashup">Mashup</option>
+          <option value="chill">Chill</option>
+        </select>
+        <div class="next">
+          <button class="Generate" id="generateButton">Generate</button><br />
+          <button class="Clear" id="clearButton">Clear</button>
+        </div>
+      </div>
+    </div>
+    <div id="image-container" class="output" style="display: none">
+      <div class="output1">
+        <div>
+          <img id="randomimg" alt="hinhanh" />
+          <button class="btn-fixed-play">▷</button>
+        </div>
+        <div class="motachung">
+          <h2 id="tieude"></h2>
+          <p id="mota"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    // Lắng nghe sự kiện click nút "Generate"
+    document
+      .getElementById("generateButton")
+      .addEventListener("click", function () {
+        const textInput = document.getElementById("textInput").value.trim();
+        let mota = "";
+
+        if (textInput !== "") {
+          const images = [
+            "img_source/remix.jpg",
+            "img_source/lofi.jpg",
+            "img_source/mashup.jpg",
+            "img_source/chill.jpg",
+          ];
+          const descriptions = [
+            "The music is intentionally recorded with imperfection, giving it a rustic, simple, and nostalgic feel. The lofi style incorporates slow or moderate tempos, gentle melodies, characteristic 'noisy' sounds like dizzying vinyl echoes, and romantic basslines.",
+            "The music is remixed from an old version, the song has the remixer's own style. The remix style combines a fast tempo, making the song catchy and energizing to the listener.",
+            "Mashup style merges elements of multiple tracks, resulting in a unique blend of sounds.",
+            "Chill style with relaxing vibes, low-key beats, and soothing melodies.",
+          ];
+          const style = document.getElementById("style").value;
+          let randomImage = "";
+          if (style === "lofi") {
+            randomImage = images[1];
+            mota = descriptions[0];
+          } else if (style === "remix") {
+            randomImage = images[0];
+            mota = descriptions[1];
+          } else if (style === "mashup") {
+            randomImage = images[2];
+            mota = descriptions[2];
+          } else {
+            randomImage = images[3];
+            mota = descriptions[3];
+          }
+          document.getElementById("tieude").innerText = textInput;
+          document.getElementById("randomimg").src = randomImage;
+          document.getElementById("mota").innerText = mota;
+          document.getElementById("image-container").style.display = "block";
+          document.querySelector(".btn-fixed-play").style.display = "block";
+        } else {
+          alert("Vui lòng nhập một đoạn văn bản!");
+        }
+      });
+    document
+      .getElementById("clearButton")
+      .addEventListener("click", function () {
+        document.getElementById("textInput").value = "";
+        document.getElementById("randomimg").src = "";
+        document.getElementById("image-container").style.display = "none";
+        document.querySelector(".btn-fixed-play").style.display = "none";
+        document.getElementById("mota").innerText = "";
+        document.getElementById("tieude").innerText = "";
+      });
+  </script>
+</html>
