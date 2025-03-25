@@ -1,0 +1,356 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background: linear-gradient(to bottom, #140943, #090621);
+  color: white;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 60px;
+  border-radius: 10px;
+  transform: rotate(15deg);
+}
+
+.logo_text {
+  font-size: 24px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-left: 10px;
+}
+
+/* Menu */
+.menu {
+  display: flex;
+  gap: 30px;
+}
+
+.menu a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.menu a:hover {
+  color: #7d51f1;
+}
+
+/* Login Button */
+.login-button {
+  background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.login-button:hover {
+  background: linear-gradient(90deg, #7d51f1, #00c6ff);
+}
+
+/* Title */
+.main-title {
+  text-align: center;
+  font-size: 42px;
+  font-weight: bold;
+  margin-top: 50px;
+}
+
+.sub-title {
+  text-align: center;
+  font-size: 16px;
+  color: #b3b3b3;
+  margin-top: 10px;
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.feature {
+  background: rgba(255, 255, 255, 0.1);
+  width: 300px;
+  padding: 30px;
+  text-align: center;
+  border-radius: 15px;
+  transition: 0.3s;
+  color: #7d51f1;
+  text-decoration: none;
+}
+
+.feature:hover {
+  transform: translateY(-10px);
+}
+
+.icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(to right, #2dd4bf, #22c55e);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.icon img {
+  width: 40px;
+  height: 40px;
+}
+
+.feature h2 {
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+.feature p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #b3b3b3;
+}
+/*bắt đầu */
+.them {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.gioithieu {
+  font-size: 14px;
+  color: #9b5de5;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.tieude {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #ffffff;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 40px;
+}
+
+.feature-item {
+  width: 300px;
+  text-align: center;
+}
+
+.icon {
+  background-color: #f3e8ff;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+
+.icon i {
+  font-size: 30px;
+  color: #9b5de5;
+}
+
+.feature-item h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Mô tả tính năng */
+.feature-item p {
+  font-size: 14px;
+  color: #3ca39c;
+  line-height: 1.6;
+}
+/* Thiết lập toàn trang */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  margin: 0;
+  background-color: #0a0425;
+  font-family: Arial, sans-serif;
+  color: white;
+  text-align: center;
+}
+
+/* Nội dung chính */
+.content {
+  flex-grow: 1;
+  padding: 50px;
+}
+
+/* Container cho hộp feedback (nằm dưới cùng) */
+.feedback-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  backdrop-filter: blur(10px);
+}
+.feedback-btn {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  padding: 10px 20px;
+  background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 15px;
+  border-bottom-right-radius: 30px;
+  border-top-right-radius: 30px;
+  font-weight: bold;
+  z-index: 9999;
+}
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ffffff;
+  margin: 20px auto;
+  width: 80%;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  width: 180px;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu:before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 16px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  transform: rotate(45deg);
+  border-top-left-radius: 2px;
+}
+
+.dropdown-menu-item {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.dropdown-menu-item:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.dropdown-menu-item:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.dropdown-menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu-item i {
+  width: 18px;
+  color: #4a90e2;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background-color: #eaeaea;
+  margin: 4px 0;
+}
+
+.logout {
+  color: #e74c3c;
+}
+
+.logout i {
+  color: #e74c3c;
+}
+
+.extension {
+  display: flex;
+  justify-content: center;
+  width: auto;
+}
+.avatar-container {
+  position: relative;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid white;
+  transition: transform 0.2s;
+  object-fit: cover;
+  display: block;
+  position: relative;
+}
+.hidden {
+  display: none;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}

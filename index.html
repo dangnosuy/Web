@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
     <title>AI Tools</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="index.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
@@ -18,12 +18,32 @@
         <span class="logo_text">AI Tools</span>
       </div>
       <nav class="menu">
-        <a href="#">Home</a>
-        <a href="#">Text to Image</a>
+        <a href="index.html">Home</a>
+        <a href="image.html">Text to Image</a>
         <a href="Music.html">Text to Music</a>
         <a href="speech.html">Text to Speech</a>
       </nav>
-      <button class="login-button">Login</button>
+      <a href="sign_in.html" class="login-button">Login</a>
+      <div class="avatar-container hidden">
+        <img src="img/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg" />
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-menu-item">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-menu-item">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-menu-item logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Đăng xuất</span>
+          </div>
+        </div>
+      </div>
     </header>
 
     <main>
@@ -35,7 +55,7 @@
       <section class="features">
         <a href="image.html" class="feature">
           <div class="icon">
-            <img src="img/text-to-image.png" alt="Text to Image" />
+            <img src="img/Image.png" alt="Text to Image" />
           </div>
           <h2>Text to Image</h2>
           <p>Transform your text descriptions into stunning visual artwork</p>
@@ -43,7 +63,7 @@
 
         <a href="music.html" class="feature">
           <div class="icon">
-            <img src="img/video3.jpg" alt="Text to Music" />
+            <img src="img/Music.png" alt="Text to Music" />
           </div>
           <h2>Text to Music</h2>
           <p>Create engaging music from your text content</p>
@@ -51,7 +71,7 @@
 
         <a href="speech.html" class="feature">
           <div class="icon">
-            <img src="img/Micro.jpg" alt="Text to Speech" />
+            <img src="img/Speech.png" alt="Text to Speech" />
           </div>
           <h2>Text to Speech</h2>
           <p>Convert your text into natural-sounding speech</p>
@@ -59,8 +79,8 @@
       </section>
     </main>
     <section class="them">
-      <p class="gioithieu">TẤT CẢ NHỮNG GÌ BẠN CẦN</p>
-      <h2 class="tieude">Các tính năng của Ai Tools là gì?</h2>
+      <p class="gioithieu">ALL YOU NEED</p>
+      <h2 class="tieude">What are the features of Ai Tools?</h2>
       <div class="icon-container">
         <div class="feature-item">
           <div class="icon">
@@ -92,6 +112,16 @@
             AI bạn chọn từ thư viện giọng nói của Ai Tools.
           </p>
         </div>
+        <div class="feature-item">
+          <div class="icon">
+            <i class="fa-solid fa-image"></i>
+          </div>
+          <h3>Đa dạng phong cách ảnh</h3>
+          <p>
+            Khám phá nhiều phong cách nghệ thuật khác nhau và biến ý tưởng của
+            bạn thành tác phẩm tuyệt đẹp với 6 phong cách khác nhau!
+          </p>
+        </div>
       </div>
     </section>
     <div class="feedback">
@@ -99,5 +129,45 @@
         ><i class="fas fa-comment"></i> Feedback</a
       >
     </div>
+    <hr />
   </body>
+  <script>
+    const avatarImg = document.getElementById("avatarImg");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    avatarImg.addEventListener("click", function (e) {
+      e.stopPropagation();
+      dropdownMenu.classList.toggle("active");
+    });
+    document.addEventListener("click", function (e) {
+      if (!avatarImg.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.remove("active");
+      }
+    });
+    document.querySelectorAll(".dropdown-menu-item").forEach((item) => {
+      item.addEventListener("click", function () {
+        const action = this.querySelector("span").textContent;
+        alert(`You clicked: ${action}`);
+        dropdownMenu.classList.remove("active");
+      });
+    });
+    const menuToggle = document.querySelector(".menu-toggle");
+    const menu = document.querySelector(".menu");
+
+    document.addEventListener("click", function (e) {
+      if (menuToggle.contains(e.target)) {
+        menu.classList.toggle("active");
+      } else if (!menu.contains(e.target)) {
+        menu.classList.remove("active");
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      if (sessionStorage.getItem("loggedIn") === "true") {
+        document.querySelector(".avatar-container").classList.remove("hidden");
+        document.querySelector(".login-button").classList.add("hidden");
+      } else {
+        document.querySelector(".avatar-container").classList.add("hidden");
+        document.querySelector(".login-button").classList.remove("hidden");
+      }
+    });
+  </script>
 </html>
