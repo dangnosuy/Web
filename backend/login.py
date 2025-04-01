@@ -7,8 +7,8 @@ CORS(login)
 
 connection = pymysql.connect(
     host='localhost',
-    user='root',
-    password='2104230122',
+    user='dangnosuy',
+    password='dangnosuy',
     database='texttoeverything',
     charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor
