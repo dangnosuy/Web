@@ -1,10 +1,10 @@
-* 
-{
-    padding: 0;
+* {
     margin: 0;
+    padding: 0;
     box-sizing: border-box;
-}
-
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
 body
 {
     background: linear-gradient(to bottom, #140943, #090621);
@@ -35,29 +35,23 @@ body
     display: inline-block;
     justify-content: space-between;
     gap: 100px;
+    width: 100%;
 }
 
-.exit
+#exit
 {
     color: #f5f5f5;
     font-size: 20px;
     float: right;
 }
 
-.return
+#return
 {
     color: #f5f5f5;
     font-size: 20px;
 }
 
-.return:hover
-{
-    background: linear-gradient( 0deg, #00c6ff,#a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.exit:hover
+#exit:hover, #return:hover
 {
     background: linear-gradient( 0deg, #00c6ff,#a855f7);
     -webkit-background-clip: text;
@@ -74,8 +68,9 @@ body
 .image_logo
 {
     height: 60px;
-    border-radius: 15px;
-    width: 70px;
+    width: 60px;
+    border-radius: 50px;
+    border: 2px solid rgb(255, 255, 255);
 }
 
 .name_logo
@@ -137,35 +132,25 @@ body
     color: #f5f5f5;
 }
 
-.form i
+.form i, .form_error i
 {
     font-size: 15px;
     color: #cccccc;
     padding-left: 10px;
 }
-
-.form_error i
-{
-    font-size: 15px;
-    color: #cccccc;
-    padding-left: 10px;
-}
-
-.group
-{
-    display: inline-block;
-}
-
-.group label
-{
-    font-size: 15px;
-}
-
 
 .input::placeholder
 {
     font-size: 15px;
     color: #8b8b8bcc;
+}
+
+#error_message, #error_message_verify
+{
+    color: rgb(250, 50, 50);
+    font-size: 15px;
+    float: left;
+    margin-bottom: 10px;
 }
 
 .submit
@@ -180,7 +165,6 @@ body
     width: 100%;
     border-radius: 25px;
     padding: 15px 15px;
-    margin-top: 15px;
 }
 
 .eye i
@@ -189,22 +173,24 @@ body
     cursor: pointer;
 }
 
-.reset_password a span
+#reset_password
 {
     color: #f5f5f5;
     font-size: 15px;
+    cursor: pointer;
     text-decoration: underline;
     float: right;
+    margin-bottom: 10px;
 }
 
-.reset_password a span:hover
+#reset_password:hover
 {
     background: linear-gradient( 90deg, #00c6ff,#a855f7);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.submit:hover
+.submit:hover, .other:hover
 {
     transform: scale(1.05);
 }
@@ -241,7 +227,7 @@ body
     cursor: pointer;
 }
 
-.other:hover
+#ResetPassword_form, #verify_email_form
 {
-    transform: scale(1.05);
+    display: none;
 }
