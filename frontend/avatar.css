@@ -1,0 +1,131 @@
+/* Modal overlay */
+.hidden {
+  display: none;
+}
+.modal {
+    display: none;               /* Ẩn mặc định */
+    position: fixed;             /* Cố định trên viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Màu nền đen với độ trong suốt để làm mờ phần còn lại */
+    z-index: 1000;               /* Đảm bảo modal luôn nằm trên các phần tử khác */
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Avatar Container Styles */
+  .avatar-container {
+    background-color: #1e293b;
+    border-radius: 12px;
+    padding: 24px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    position: relative;
+  }
+  
+  /* Các style khác cho phần bên trong form */
+  .avatar-container .skip-button {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    text-decoration: none;
+    color: #e2e8f0;
+    font-size: 14px;
+  }
+  
+  .avatar-container h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .avatar-container .subtitle {
+    color: #cbd5e1;
+    margin-bottom: 24px;
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  .avatar-gallery {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  
+  .avatar-option {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #334155;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .avatar-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .avatar-placeholder {
+    opacity: 3.0;
+  }
+  
+  .input-container {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  
+  .prompt-input {
+    width: 100%;
+    padding: 10px 10px 10px 40px;
+    border-radius: 6px;
+    border: 1px solid #475569;
+    background-color: #334155;
+    color: white;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+  
+  .dice-button {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .generate-button {
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    width: 100%;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .generate-button:hover {
+    background-color: #2563eb;
+  }
+  
+  .hint-text {
+    color: #94a3b8;
+    font-size: 12px;
+    text-align: center;
+  }
+  

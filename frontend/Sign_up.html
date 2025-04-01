@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="avatar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <title>Sign up | AlchemistAI</title>
+</head>
+
+<body>
+    <div id="wraper">
+        <form id="login_register">
+            <div class="control">
+                <a href="./Sign_in.html" class="return">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <a href="#" class="exit">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+            </div>
+            <div class="logo">
+                <img class="image_logo" src="img_source/logo.png">
+                <span class="name_logo">AlchemistAI</span>
+            </div>
+            <h1 class="heading"> Sign up to Your Account</h1>
+            <div class="group">
+                <label for="username">Username</label>
+                <br>
+                <div class="form" id="check_username">
+                    <i class="far fa-user"></i>
+                    <input type="text" class="input" id="username" placeholder="Enter username">
+                </div>
+            </div>
+            <div class="group">
+                <label class="UserPass" for="email">Email</label>
+                <br>
+                <div class="form" id="check_email">
+                    <i class="fa-regular fa-envelope"></i>
+                    <input type="email" class="input" id="email" placeholder="Enter email">
+                </div>
+            </div>
+            <div class="group">
+                <label class="UserPass" for="password">Password</label>
+                <br>
+                <div class="form" id="check_password">
+                    <i class="fa fa-key"></i>
+                    <input type="password" class="input" id="password" placeholder="Create password">
+                    <div class="eye">
+                        <i class="far fa-eye"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="group">
+                <label class="UserPass" for="Confirm password">Confirm password</label>
+                <br>
+                <div class="form" id="check_confirm">
+                    <i class="fa fa-key"></i>
+                    <input type="password" class="input" id="confirm" placeholder="Confirm password">
+                    <div class="eye">
+                        <i class="far fa-eye"></i>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="submit" id="sign_up">Sign Up</button>
+    </div>
+    </div>
+    </form>
+    </div>
+    <!-- Avatar Setup Form -->
+    <!-- Avatar Setup Form -->
+    <!-- Modal Avatar Setup -->
+    <div class="modal" id="avatarModal">
+        <div class="avatar-container" id="avatarSetupContainer">
+            <a href="#" class="skip-button">Skip</a>
+
+            <h1>Generate your Avatar</h1>
+            <p class="subtitle">Set up your avatar profile.</p>
+
+            <div class="avatar-gallery">
+                <div class="avatar-option">
+                    <img src="img_source/ho.jpg" alt="Avatar 1">
+                </div>
+                <div class="avatar-option">
+                    <img src="img_source/trongdang_20250322T012000.png" alt="Avatar 2">
+                </div>
+                <div class="avatar-option avatar-placeholder">
+                    <img src="img/toiladang_20250326T032131.png" id="avatar_generate" alt="Avatar 3">
+                </div>
+                <div class="avatar-option">
+                    <img src="img/trongdang123_20250326T062617.png" alt="Avatar 4">
+                </div>
+                <div class="avatar-option">
+                    <img src="img/toiladang_20250326T032322.png" alt="Avatar 5">
+                </div>
+            </div>
+
+            <div class="input-container">
+                <input type="text" class="prompt-input" id="promptInput" placeholder="eg: a Wallaby with a fedora"
+                    value="A fox with a detective hat">
+                <button class="dice-button" id="randomBtn">🎲</button>
+            </div>
+
+            <button class="generate-button" id="generateBtn" onclick="set_avatar()">Generate</button>
+            <button class="generate-button hidden" id="setAvatarBtn" onclick="acceptAvatar()">Set as Avatar</button>
+            <p class="hint-text">Randomize or write your own prompt! Your avatar will be displayed on your public
+                profile.</p>
+        </div>
+    </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Gán sự kiện cho nút Generate để gọi hàm set_avatar
+        document.getElementById("generateBtn").addEventListener("click", set_avatar);
+    
+        // Gán sự kiện cho nút Skip để ẩn modal
+        document.querySelector(".skip-button").addEventListener("click", function(event) {
+            event.preventDefault();  // Ngăn chặn hành vi mặc định của thẻ <a>
+            document.getElementById("avatarModal").style.display = "none";
+        });
+    });
+</script>
+<script src="login.js"></script>
+<script src="avatar.js"></script>
+</html>
