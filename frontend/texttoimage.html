@@ -8,6 +8,24 @@
   <title>Text To Image | AlchemistAI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="texttoimage.css" />
+  <style>
+    .api-error-message {
+      color: #ef4444; /* Màu đỏ của Tailwind (red-500) */
+      background-color: #fee2e2; /* Màu đỏ nhạt (red-100) */
+      border: 1px solid #fca5a5; /* Màu đỏ nhạt hơn (red-300) */
+      padding: 0.75rem; /* p-3 */
+      margin-top: 0.75rem; /* mt-3 */
+      border-radius: 0.375rem; /* rounded-lg */
+      text-align: center;
+    }
+     .user-balance-info {
+        margin-top: 0.5rem; /* mt-2 */
+        margin-bottom: 0.75rem; /* mb-3 */
+        font-size: 0.875rem; /* text-sm */
+        color: #d1d5db; /* text-gray-300, có thể điều chỉnh cho phù hợp với theme của bạn */
+        text-align: right; /* Căn phải hoặc trái tùy bạn */
+    }
+  </style>
 </head>
 
 <body>
@@ -30,6 +48,11 @@
       <a href="#" class="text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1 hover:text-blue-700 text-lg">Text to Image</a>
       <a href="texttomusic.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text to Music</a>
     </nav>
+
+    <div class="user-balance-info" id="mainUserBalanceInfo">
+      Số dư của bạn: <span id="mainBalanceValue">N/A</span>
+      </div>
+
     <div class="avatar-container">
       <img src="img_source/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg">
       <!-- Dropdown Menu -->
@@ -82,6 +105,7 @@
             <button id="clear" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/30">Clear</button>
           </div>
         </div>
+        <div id="apiErrorMessages" class="api-error-message" style="display:none;"></div>
       </div>
       <div id="spinner" class="spinner" style="display: none;"></div>
       <div class="output-container">
@@ -106,12 +130,18 @@
     const errorMessage = document.getElementById('errorMessage');
     const spinner = document.getElementById('spinner');
 
+    const apiErrorMessagesDisplay = document.getElementById('apiErrorMessages'); // Nơi hiển thị lỗi từ API
+
+     // Các DOM element cho hiển thị số dư
+     const mainBalanceValueDisplay = document.getElementById('mainBalanceValue');
+
     generateButton.addEventListener('click', function (event) {
       event.preventDefault()
       // Kiểm tra nếu ô input trống
       if (textInput.value.trim() === "") {
         textInput.classList.add('error');
         errorMessage.style.display = 'block';
+        if (apiErrorMessagesDisplay) apiErrorMessagesDisplay.style.display = 'none'; // Ẩn lỗi API nếu có
         // Có thể thông báo cho người dùng nếu muốn
       } else {
         textInput.classList.remove('error');
@@ -171,6 +201,55 @@
         menu.classList.remove('active');
     }
     });
+    
+    function getCurrentUsername() {
+        return localStorage.getItem('username');
+    }
+
+     // Hàm để cập nhật hiển thị số dư trên UI
+     function updateBalanceDisplay(newBalance) {
+        if (mainBalanceValueDisplay && newBalance !== undefined && newBalance !== null) {
+            mainBalanceValueDisplay.textContent = newBalance;
+        }
+        if (dropdownBalanceValueDisplay && newBalance !== undefined && newBalance !== null) {
+            dropdownBalanceValueDisplay.textContent = newBalance;
+        }
+    }
+
+    async function fetchUserBalance() {
+        const username = getCurrentUsername();
+        if (!username) return; // Không có người dùng, không làm gì cả
+
+        try {
+            // Thay thế bằng URL API lấy số dư thực tế của bạn
+            // const response = await fetch(`/api/user/balance?username=${username}`);
+            // const data = await response.json();
+            // if (data.success && data.balance !== undefined) {
+            //     updateBalanceDisplay(data.balance);
+            // } else {
+            //     console.error("Không thể lấy số dư:", data.error);
+            // }
+            // Giả lập:
+            updateBalanceDisplay(Math.floor(Math.random() * 1000)); // Số dư ngẫu nhiên để test
+        } catch (error) {
+            console.error("Lỗi khi lấy số dư:", error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const loggedInUsername = getCurrentUsername();
+      if (!loggedInUsername) {
+          // Nếu chưa đăng nhập, có thể chuyển hướng về trang đăng nhập
+          // window.location.href = 'Sign_in.html'; 
+          console.log("Người dùng chưa đăng nhập.");
+          if(mainBalanceValueDisplay) mainBalanceValueDisplay.textContent = "Vui lòng đăng nhập";
+      } else {
+          console.log(`Người dùng đã đăng nhập: ${loggedInUsername}`);
+          // Gọi API để lấy số dư ban đầu khi trang tải
+          fetchUserBalance(); 
+      }
+    });
+
   </script>
   <script src="./tti.js"></script>
 </body>

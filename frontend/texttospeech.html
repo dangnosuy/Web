@@ -14,19 +14,19 @@
         <i class="fas fa-bars"></i>
       </button>
       <div class="logo">
-        <img
-          src="img_source/logo.png"
-          alt="Text to Image"
-          width="50px"
-          height="50px"
+        <img style="border: 2px solid #3b82f6 ;" class="w-16 h-16 rounded-full object-cover" src="img_source/logo.png"
+        alt="Logo"
         />
-        <span class="logo_speech_text">Text to Speech</span>
+        <span class="logo_text" style="background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;" class="text-xl font-bold">
+        AlchemistAI</span>
       </div>
       <nav class="menu">
-        <a href="index.html">Home</a>
-        <a href="texttoimage.html" >Text to Image</a>
-        <a href="texttomusic.html">Text to Music</a>
-        <a href="#" class="active">Text to Speech</a>
+        <a href="index.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Home</a>
+        <a href="#" class="text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1 hover:text-blue-700 text-lg">Text to Speech</a>
+        <a href="texttoimage.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Text to Image</a>
+        <a href="texttomusic.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text to Music</a>
       </nav>
       <div class="avatar-container">
         <img src="img_source/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg">
@@ -49,35 +49,54 @@
         </div>
       </div>
     </div>
-      
     </header>
-    <main>
+    
+    <main style="background: #0a0425 url('https://img.freepik.com/free-vector/colorful-wavy-background_23-2148494696.jpg?t=st=1744525839~exp=1744529439~hmac=79f342806727a0519b017c97358513949e42e72532324180342328c049d7ac9c&w=2000') no-repeat center center fixed;
+       background-size: cover;">
+       <!-- phần giới thiệu trang -->
+       <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Text To Speech</h1>
+       <div class="text mb-4">
+        Bring your words to life with voice. Enter your text, choose a voice, and let AI turn it into natural speech
+       </div>
       <!-- Main Workspace -->
       <div class="workspace">
         <div class="text-input-container hover:transform hover:scale-[1.02] transition-all duration-300">
-          <label for="textInput">Text input</label>
-          <textarea
-            id="textInput"
-            placeholder="Enter text to convert to speech"
-          ></textarea>
+          <div class="tab-buttons">
+            <button class="tab-button active" data-tab="text-panel">Text Input</button>
+            <button class="tab-button" data-tab="file-panel">File Input</button>
+          </div>
+          <div class="tab-content">
+            <div id="text-panel" class="tab-panel active">
+              <textarea id="textInput" placeholder="Enter text to convert to speech"></textarea>
+            </div>
+      
+            <div id="file-panel" class="tab-panel" style="display: none;">
+               <label for="file-upload" class="custom-file-upload">
+                   <i class="fas fa-cloud-upload-alt"></i> Click or Drag & Drop File
+               </label>
+               <input id="file-upload" type="file" style="display: none;"/>
+               <p class="file-info">Accepts: .txt, .pdf, .docx</p>
+            </div>
+          </div>
+          
           <div class="controls">
             <div class="params">
-              <select id="language" name="language" class="p-2 sm:p-2 text-sm sm:text-base border rounded-lg bg-white/5 text-teal-300 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-teal-500">
+              <select id="language" name="language" class="p-2 sm:p-2 text-sm sm:text-base border rounded-lg bg-white/5 text-gray-100 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-blue-500">
               <option value="vi" selected class="bg-[#0f0149] text-white">Tiếng Việt</option>
-              <option value="en" class="bg-[#0f0149] text-white">English (US)</option>
-              <option value="en-kd" class="bg-[#0f0149] text-white">English (UK)</option>
-              <option value="pt" class="bg-[#0f0149] text-white">Brazil</option>
-              <option value="ko" class="bg-[#0f0149] text-white">Korea</option>
-              <option value="zh" class="bg-[#0f0149] text-white">China</option>
-              <option value="ja" class="bg-[#0f0149] text-white">Japan</option>
-              <option value="it" class="bg-[#0f0149] text-white">Italy</option>
-              <option value="es" class="bg-[#0f0149] text-white">Spain</option>
-              <option value="fr" class="bg-[#0f0149] text-white">France</option>
+              <option value="en" class="bg-[#374151] text-white">English (US)</option>
+              <option value="en-kd" class="bg-[#374151] text-white">English (UK)</option>
+              <option value="pt" class="bg-[#374151] text-white">Brazil</option>
+              <option value="ko" class="bg-[#374151] text-white">Korea</option>
+              <option value="zh" class="bg-[#374151] text-white">China</option>
+              <option value="ja" class="bg-[#374151] text-white">Japan</option>
+              <option value="it" class="bg-[#374151] text-white">Italy</option>
+              <option value="es" class="bg-[#374151] text-white">Spain</option>
+              <option value="fr" class="bg-[#374151] text-white">France</option>
             </select>
         
-              <select id="gender" name="voice" class="p-2 border rounded-lg bg-white/5 text-teal-300 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-teal-500">
-                <option value="male" selected class="bg-[#0f0149] text-white">Male voice</option>
-                <option value="female" class="bg-[#0f0149] text-white">Female voice</option>
+              <select id="gender" name="voice" class="p-2 border rounded-lg bg-white/5 text-gray-100 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-blue-500">
+                <option value="male" selected class="bg-[#374151] text-white">Male voice</option>
+                <option value="female" class="bg-[#374151] text-white">Female voice</option>
               </select>
             </div>
             <div class="actions">
@@ -87,7 +106,7 @@
           </div>
         </div>
         <div class="output-container hover:transform hover:scale-[1.02] transition-all duration-300">
-          <label for="Recordings" class="tilte">Recordings</label>
+          <label for="Recordings" class="tilte">Your generated audio</label>
             <div class="recording-item">
               <audio id="audio-player" controls src="">
                 <source src="" type="audio/mpeg" />
@@ -144,7 +163,6 @@
 
       if (!response.ok) throw new Error("TTS request failed");
       const newItem = await response.json();
-      alert("Đây là kết quả: " + JSON.stringify(newItem));
       audioElement.src = newItem.result;
       audioElement.style.display = "block"; // hiện audio
       audioElement.load();
@@ -187,15 +205,31 @@
     const timeAgoText = getTimeAgo(timestamp);
 
     div.innerHTML = `
-    <p title="${item.input_text}">${previewText}</p>
-    <small class="time-text" data-timestamp="${timestamp}">${timeAgoText}</small>
-    ${item.result ? `<audio controls src="${item.result}"></audio>` : ""}
-  `;
+        <p title="${item.input_text}">${previewText}</p>
+        <small class="time-text" data-timestamp="${timestamp}">${timeAgoText}</small>
+        ${
+            item.result
+                ? `
+                    <div class="audio-history-container">
+                        <audio controls src="${item.result}"></audio>
+                        <div class="audio-controls">
+                            <a href="${item.result}" download class="audio-control-btn">
+                                <i class="fas fa-download" title="Download"></i>
+                            </a>
+                            <button class="audio-control-btn delete-btn">
+                                <i class="fas fa-trash" title="Delete"></i>
+                            </button>
+                        </div>
+                    </div>
+                `
+                : ""
+        }
+    `;
     return div;
   };
 
   // Load history
-  async function loadHistory(username) {
+  async function loadHistory(username) { 
     try {
       const response = await fetch(
         `http://127.0.0.1:5552/api/history_tts?username=${encodeURIComponent(username)}`
@@ -281,6 +315,47 @@
       menu.classList.remove('active');
   }
   });
+  document.addEventListener('DOMContentLoaded', function() {
+  // Lấy tất cả các nút tab
+  const tabButtons = document.querySelectorAll('.tab-button');
+
+  // Lặp qua từng nút tab và thêm sự kiện click
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Lấy ID của panel mục tiêu từ thuộc tính data-tab của nút được nhấp
+      const targetPanelId = button.getAttribute('data-tab');
+      const targetPanel = document.getElementById(targetPanelId);
+
+      // Kiểm tra xem panel mục tiêu có tồn tại không
+      if (!targetPanel) {
+        console.error("Không tìm thấy panel với ID:", targetPanelId);
+        return; // Nếu không tìm thấy, dừng thực thi
+      }
+
+      // --- Cập nhật trạng thái active cho các nút ---
+      // 1. Xóa lớp 'active' khỏi TẤT CẢ các nút tab
+      tabButtons.forEach(btn => {
+        btn.classList.remove('active');
+      });
+      // 2. Thêm lớp 'active' vào nút VỪA ĐƯỢC NHẤP
+      button.classList.add('active');
+
+      // --- Cập nhật hiển thị cho các panel ---
+      // 1. Lấy tất cả các panel (là con trực tiếp của .tab-content và có ID)
+      //    Sử dụng class .tab-panel sẽ tốt hơn nếu có
+      const allPanels = document.querySelectorAll('.tab-content > .tab-panel'); // Sử dụng class .tab-panel
+      // 2. Ẩn TẤT CẢ các panel
+      allPanels.forEach(panel => {
+        panel.style.display = 'none';
+         // Hoặc nếu dùng class: panel.classList.remove('active');
+      });
+      // 3. Hiển thị panel MỤC TIÊU
+      targetPanel.style.display = 'block'; // Hoặc 'flex', 'grid' tùy thuộc vào CSS
+      // Hoặc nếu dùng class: targetPanel.classList.add('active');
+
+    });
+  });
+});
     </script> 
   </body>
 </html>
