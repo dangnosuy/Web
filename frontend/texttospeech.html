@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text To Speech | AlchemistAI</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="texttospeech.css" />
+  <link rel="stylesheet" href="header.css">
+</head>
+
+<body>
+  <header>
+    <button class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="logo">
+      <img style="border: 2px solid #3b82f6 ;" class="w-16 h-16 rounded-full object-cover" src="img_source/logo.png"
+        alt="Logo" />
+      <span class="logo_text" style="background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;" class="text-xl font-bold">
+        AlchemistAI</span>
+    </div>
+    <nav class="menu">
+      <a href="index.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Home</a>
+      <a href="#" class="text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1 hover:text-blue-700 text-lg">Text
+        to Speech</a>
+      <a href="texttoimage.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Text
+        to Image</a>
+      <a href="texttomusic.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text
+        to Music</a>
+      <a href="texttovideo.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text
+        to Video</a>
+    </nav>
+    <div class="login-container">
+      <a href="sign_in.html" id="sign_in" class="login-button">Login</a>
+    </div>
+    <div class="avatar-container">
+      <div style="color: aliceblue; margin-right: 0.75rem; justify-self: center; align-self: center;" id="user-balance">Đang tải…</div>
+      <img src="img_source/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg">
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="profile.html" class="dropdown-menu-item">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="settings.html" class="dropdown-menu-item">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="Sign_in.html" class="dropdown-menu-item logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Log out</span>
+        </a>
+      </div>
+    </div>
+    </div>
+  </header>
+
+  <main style="background: #0a0425 url('https://img.freepik.com/free-vector/colorful-wavy-background_23-2148494696.jpg?t=st=1744525839~exp=1744529439~hmac=79f342806727a0519b017c97358513949e42e72532324180342328c049d7ac9c&w=2000') no-repeat center center fixed;
+       background-size: cover;">
+    <!-- phần giới thiệu trang -->
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Text To Speech</h1>
+    <div class="text mb-4">
+      Bring your words to life with voice. Enter your text, choose a voice, and let AI turn it into natural speech
+    </div>
+    <!-- Main Workspace -->
+    <div class="workspace">
+      <div class="text-input-container hover:transform hover:scale-[1.02] transition-all duration-300">
+        <div class="tab-buttons">
+          <button class="tab-button active" data-tab="text-panel">Text Input</button>
+          <button class="tab-button" data-tab="file-panel">File Input</button>
+        </div>
+        <label for="file-prompt" class="block text-sm font-medium text-gray-300 mb-2">Enter prompt for processing
+          the audio file:</label>
+        <div class="tab-content">
+
+          <div id="text-panel" class="tab-panel active">
+            <textarea id="textInput" placeholder="Enter text to convert to speech"></textarea>
+          </div>
+
+          <div id="file-panel" class="tab-panel" style="display: none;">
+            <!-- Prompt Section First -->
+            <div class="prompt-section mb-4">
+
+              <textarea id="file-prompt"
+                class="w-full h-24 bg-white/5 border border-gray-600 rounded-lg p-3 text-gray-100 focus:border-blue-500 focus:ring focus:ring-blue-500/30 transition-all"
+                placeholder="E.g., 'Transcribe this audio file' or 'Summarize the content of this recording'"></textarea>
+            </div>
+
+            <!-- File Upload Section Second -->
+            <div class="file-upload-section mb-4">
+              <label for="file-upload"
+                class="custom-file-upload flex flex-col items-center justify-center p-6 border-2 border-dashed border-gray-400 rounded-lg hover:border-blue-400 transition-all duration-300 cursor-pointer">
+                <i class="fas fa-cloud-upload-alt text-2xl mb-2"></i>
+                <span class="text-lg">Click or Drag & Drop File</span>
+                <span class="text-sm text-gray-300 mt-1">Accepts: .mp3, .wav</span>
+              </label>
+              <input id="file-upload" type="file" accept=".mp3,.wav" style="display: none;" />
+              <div id="file-display" class="hidden mt-3">
+                <div class="flex items-center justify-between p-2 bg-white/10 rounded-lg border border-gray-500">
+                  <div class="flex items-center">
+                    <i class="fas fa-file-audio text-blue-400 mr-2"></i>
+                    <span id="file-name" class="text-sm truncate max-w-xs">No file selected</span>
+                  </div>
+                  <button id="remove-file" class="text-red-400 hover:text-red-500 transition-colors">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="actions">
+                <button type="button" id="startBtn1"
+                  class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/30 ">🎤
+                  Bấm để nói</button>
+                <button id="genFromFile"
+                  class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30">Generate</button>
+                <button id="clearPrompt"
+                  class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/30">Clear</button>
+              </div>
+            </div>
+
+            <!-- Processing Options Last -->
+          </div>
+
+
+        </div>
+
+        <div class="controls">
+          <div class="params">
+            <select id="language" name="language"
+              class="p-2 sm:p-2 text-sm sm:text-base border rounded-lg bg-white/5 text-gray-100 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-blue-500">
+              <option value="Tiếng Việt" selected class="bg-[#0f0149] text-white">Tiếng Việt</option>
+              <option value="Tiếng Anh" class="bg-[#0f0149] text-white">Tiếng Anh</option>
+              <option value="Tiếng Tây Ban Nha" class="bg-[#0f0149] text-white">Tiếng Tây Ban Nha</option>
+              <option value="Tiếng Pháp" class="bg-[#0f0149] text-white">Tiếng Pháp</option>
+              <option value="Tiếng Đức" class="bg-[#0f0149] text-white">Tiếng Đức</option>
+              <option value="Tiếng Ý" class="bg-[#0f0149] text-white">Tiếng Ý</option>
+              <option value="Tiếng Bồ Đào Nha" class="bg-[#0f0149] text-white">Tiếng Bồ Đào Nha</option>
+              <option value="Tiếng Ba Lan" class="bg-[#0f0149] text-white">Tiếng Ba Lan</option>
+              <option value="Tiếng Thổ Nhĩ Kỳ" class="bg-[#0f0149] text-white">Tiếng Thổ Nhĩ Kỳ</option>
+              <option value="Tiếng Nga" class="bg-[#0f0149] text-white">Tiếng Nga</option>
+              <option value="Tiếng Hà Lan" class="bg-[#0f0149] text-white">Tiếng Hà Lan</option>
+              <option value="Tiếng Séc" class="bg-[#0f0149] text-white">Tiếng Séc</option>
+              <option value="Tiếng Ả Rập" class="bg-[#0f0149] text-white">Tiếng Ả Rập</option>
+              <option value="Tiếng Trung (giản thể)" class="bg-[#0f0149] text-white">Tiếng Trung (giản
+                thể)</option>
+              <option value="Tiếng Nhật" class="bg-[#0f0149] text-white">Tiếng Nhật</option>
+              <option value="Tiếng Hungary" class="bg-[#0f0149] text-white">Tiếng Hungary</option>
+              <option value="Tiếng Hàn" class="bg-[#0f0149] text-white">Tiếng Hàn</option>
+              <option value="Tiếng Hindi" class="bg-[#0f0149] text-white">Tiếng Hindi</option>
+            </select>
+
+            <select id="gender" name="voice"
+              class="p-2 border rounded-lg bg-white/5 text-gray-100 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-blue-500">
+              <option value="male" selected class="bg-[#374151] text-white">Male voice</option>
+              <option value="female" class="bg-[#374151] text-white">Female voice</option>
+            </select>
+            <select id="male_styles" name="voice"
+              class="p-2 border rounded-lg bg-white/5 text-teal-300 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-teal-500">
+              <option value="calm" selected class="bg-[#0f0149] text-white">Calm</option>
+              <option value="cham" selected class="bg-[#0f0149] text-white">Slow</option>
+              <option value="nhanh" selected class="bg-[#0f0149] text-white">Fast</option>
+              <option value="truyencam" selected class="bg-[#0f0149] text-white">Inspirational</option>
+            </select>
+            <select id="female_styles" name="voice"
+              class="p-2 border rounded-lg bg-white/5 text-teal-300 hover:bg-white/10 transition-all duration-300 cursor-pointer hover:border-teal-500">
+              <option value="calm" selected class="bg-[#0f0149] text-white">Calm</option>
+              <option value="cham" selected class="bg-[#0f0149] text-white">Slow</option>
+              <option value="luuloat" selected class="bg-[#0f0149] text-white">Fluency</option>
+              <option value="nhannha" selected class="bg-[#0f0149] text-white">Smooth</option>
+              <option value="nhenhang" selected class="bg-[#0f0149] text-white">Lightly</option>
+            </select>
+          </div>
+          <div class="actions">
+            <button type="button" id="startBtn"
+                  class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/30 ">🎤
+                  Bấm để nói</button>
+            <button id="generateBtn"
+              class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/30">Generate</button>
+            <button id="clearBtn"
+              class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-red-500/30">Clear</button>
+          </div>
+        </div>
+      </div>
+      <div class="output-container hover:transform hover:scale-[1.02] transition-all duration-300">
+        <label for="Recordings" class="tilte">Your generated audio</label>
+        <div class="recording-item">
+          <audio id="audio-player" controls src="">
+            <source src="" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+    </div>
+    <div class="extension">
+      <!-- Chat History Sidebar -->
+      <div class="chat-history hover:transform hover:scale-[1.02] transition-all duration-300">
+        <h3 class="history-title">History</h3>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const fileInput = document.getElementById('file-upload');
+    const fileDisplay = document.getElementById('file-display');
+    const fileNameSpan = document.getElementById('file-name');
+    const removeBtn = document.getElementById('remove-file');
+
+    // Khi user chọn file
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length) {
+        fileNameSpan.textContent = fileInput.files[0].name;
+        fileDisplay.classList.remove('hidden');
+      } else {
+        fileNameSpan.textContent = '';
+        fileDisplay.classList.add('hidden');
+      }
+    });
+
+    // Khi user bấm X để bỏ file
+    removeBtn.addEventListener('click', () => {
+      fileInput.value = '';
+      fileNameSpan.textContent = '';
+      fileDisplay.classList.add('hidden');
+    });
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    const controls = document.querySelector('.controls');
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // 1. Update active button
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // 2. Show the right panel, hide the others
+        const target = btn.dataset.tab;
+        tabPanels.forEach(panel => {
+          if (panel.id === target) {
+            panel.classList.add('active');
+            panel.style.display = '';      // use default/display:block
+          } else {
+            panel.classList.remove('active');
+            panel.style.display = 'none';
+          }
+        });
+
+        // 3. Show or hide the controls area
+        if (target === 'file-panel') {
+          controls.style.display = 'none';
+        } else {
+          controls.style.display = '';
+        }
+      });
+    });
+    const genderSelect = document.getElementById('gender');
+    const maleStyles = document.getElementById('male_styles');
+    const femaleStyles = document.getElementById('female_styles');
+
+    function updateVoiceStyles() {
+      const selectedGender = genderSelect.value;
+      if (selectedGender === 'male') {
+        maleStyles.style.display = 'block';  // Hiển thị phong cách nam
+        femaleStyles.style.display = 'none'; // Ẩn phong cách nữ
+      } else if (selectedGender === 'female') {
+        maleStyles.style.display = 'none';   // Ẩn phong cách nam
+        femaleStyles.style.display = 'block'; // Hiển thị phong cách nữ
+      }
+    }
+    updateVoiceStyles()
+    genderSelect.addEventListener('change', updateVoiceStyles);
+    document.getElementById("clearBtn").addEventListener('click', function () {
+      document.getElementById('textInput').value = '';
+    });
+    // API call to convert text to speech
+    document
+      .getElementById("generateBtn")
+      .addEventListener("click", sendText);
+    document
+      .getElementById("genFromFile")
+      .addEventListener("click", sendFile);
+    async function sendText() {
+      // test username
+
+      const username = localStorage.getItem('username');
+      // lấy dữ liệu từ form
+      const text = document.getElementById("textInput").value;
+      document.getElementById("textInput").value = "";
+      const language = document.getElementById("language").value;
+      const gender = document.getElementById("gender").value;
+      let style;
+      if (gender == "male") {
+        style = document.getElementById("male_styles").value
+      }
+      else {
+        style = document.getElementById("female_styles").value
+      }
+      const data = { username, text, language, gender, style };
+      console.log(data)
+      if (text.trim() === "") {
+        alert("Vui lòng nhập text");
+        return;
+      }
+      // Lấy audio element
+      const audioElement = document.getElementById("audio-player");
+
+      // Ẩn audio cũ và clear src trước khi gửi
+      audioElement.style.display = "none";
+      audioElement.pause(); // dừng phát nếu đang phát
+      audioElement.src = "";
+
+      try {
+        const response = await fetch("http://127.0.0.1:5552/api/tts_choice", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        const payload = await response.json();
+        if (!response.ok) {
+          // Dùng message từ payload.error nếu có
+          throw new Error(payload.error || `HTTP error ${response.status}`);
+        }
+        const newItem = await response.json();
+        //alert("Đây là kết quả: " + JSON.stringify(newItem));
+        audioElement.src = newItem.result;
+        audioElement.style.display = "block"; // hiện audio
+        audioElement.load();
+        audioElement.play();
+        // Thêm vào history containter
+        addToHistory(newItem.history_item);
+
+      } catch (err) {
+        //alert("Error: " + err.message);
+        console.log("Error", err)
+      }
+    };
+    async function sendFile() {
+      const username = localStorage.getItem('username');
+      const fileInput = document.getElementById('file-upload');
+      const promptInput = document.getElementById('file-prompt');
+
+      if (!fileInput.files.length) {
+        alert('Vui lòng chọn file để upload');
+        return;
+      }
+      const file = fileInput.files[0];
+      const prompt = promptInput.value.trim();
+      if (!prompt) {
+        alert('Vui lòng nhập prompt để clone giọng');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('username', username);
+      formData.append('text', prompt);
+      formData.append('file', file);
+
+      try {
+        const res = await fetch('http://127.0.0.1:5552/api/tts_upload', {
+          method: 'POST',
+          body: formData
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(`Status ${res.status}: ${errText}`);
+        }
+
+        const data = await res.json();
+        //alert('Upload & Train thành công:\n' + JSON.stringify(data, null, 2));
+      } catch (err) {
+        console.error('[sendFile] Lỗi khi fetch:', err);
+        //alert('Lỗi khi upload/generate:\n' + err.message);
+      }
+    }
+
+
+    // Hàm tính giờ so với hiện tại
+    function getTimeAgo(timestamp) {
+      const now = Date.now();
+      const diff = now - timestamp;
+      const minutes = Math.floor(diff / 60000);
+      const hours = Math.floor(diff / 3600000);
+
+      if (diff < 60000) return "Vừa xong";
+      if (diff < 3600000) return `${minutes} phút trước`;
+      if (diff < 86400000) return `${hours} giờ trước`;
+      return `${Math.floor(diff / 86400000)} ngày trước`;
+    };
+
+
+    // Hàm tạo history-item
+    function createHistoryItem(item) {
+      const div = document.createElement("div");
+      div.className = "history-item";
+
+      const previewText =
+        item.input_text.length > 30 ? item.input_text.slice(0, 30) + "..." : item.input_text;
+
+      //Lấy timestamp (tức giờ generate gốc) để làm mốc xác định dùng để cập nhật realtime
+      const timestamp = item.timestamp;
+      //Gọi hàm trả về giờ so với hiện tại
+      const timeAgoText = getTimeAgo(timestamp);
+
+      div.innerHTML = `
+        <p title="${item.input_text}">${previewText}</p>
+        <small class="time-text" data-timestamp="${timestamp}">${timeAgoText}</small>
+        ${item.result
+          ? `
+                    <div class="audio-history-container">
+                        <audio controls src="${item.result}"></audio>
+                        <div class="audio-controls">
+                            <a href="${item.result}" download class="audio-control-btn">
+                                <i class="fas fa-download" title="Download"></i>
+                            </a>
+                            <button class="audio-control-btn delete-btn">
+                                <i class="fas fa-trash" title="Delete"></i>
+                            </button>
+                        </div>
+                    </div>
+                `
+          : ""
+        }
+    `;
+      return div;
+    };
+
+    // Load history
+    async function loadHistory(username) {
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:5552/api/history_tts?username=${encodeURIComponent(username)}`
+        );
+        const historyData = await response.json();
+
+        const historyContainer = document.querySelector(".chat-history");
+
+        // Xóa những item cũ (nếu có)
+        const oldItems = historyContainer.querySelectorAll(".history-item");
+        oldItems.forEach((item) => item.remove());
+
+        // Thêm lịch sử mới
+        historyData.forEach((item) => {
+          const div = createHistoryItem(item);
+          historyContainer.appendChild(div);
+        });
+      } catch (err) {
+        console.error("Lỗi load history:", err);
+      }
+    }
+
+    // Gọi khi load trang (hoặc khi đăng nhập xong)
+    window.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem('username'); // Thay bằng username thật sau khi login
+      loadHistory(username);
+    });
+
+    // Khi vừa bấm generate nhưng muốn không phải load trang để cập nhật history
+    function addToHistory(newItem) {
+      const historyContainer = document.querySelector(".chat-history");
+      const div = createHistoryItem(newItem);
+      historyContainer.insertBefore(div, historyContainer.querySelector(".history-title").nextSibling);
+    };
+
+    //Cập nhật thời gian từng history-item theo realtime
+    setInterval(() => {
+      const timeElements = document.querySelectorAll('.time-text');
+      timeElements.forEach(el => {
+        const timestamp = Number(el.dataset.timestamp); // chuyển rõ ràng sang số
+        if (!isNaN(timestamp)) {
+          el.textContent = getTimeAgo(timestamp);
+        }
+      });
+    }, 60000);
+
+    // Avatar dropdown functionality
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      // Lấy tất cả các nút tab
+      const tabButtons = document.querySelectorAll('.tab-button');
+
+      // Lặp qua từng nút tab và thêm sự kiện click
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Lấy ID của panel mục tiêu từ thuộc tính data-tab của nút được nhấp
+          const targetPanelId = button.getAttribute('data-tab');
+          const targetPanel = document.getElementById(targetPanelId);
+
+          // Kiểm tra xem panel mục tiêu có tồn tại không
+          if (!targetPanel) {
+            console.error("Không tìm thấy panel với ID:", targetPanelId);
+            return; // Nếu không tìm thấy, dừng thực thi
+          }
+
+          // --- Cập nhật trạng thái active cho các nút ---
+          // 1. Xóa lớp 'active' khỏi TẤT CẢ các nút tab
+          tabButtons.forEach(btn => {
+            btn.classList.remove('active');
+          });
+          // 2. Thêm lớp 'active' vào nút VỪA ĐƯỢC NHẤP
+          button.classList.add('active');
+
+          // --- Cập nhật hiển thị cho các panel ---
+          // 1. Lấy tất cả các panel (là con trực tiếp của .tab-content và có ID)
+          //    Sử dụng class .tab-panel sẽ tốt hơn nếu có
+          const allPanels = document.querySelectorAll('.tab-content > .tab-panel'); // Sử dụng class .tab-panel
+          // 2. Ẩn TẤT CẢ các panel
+          allPanels.forEach(panel => {
+            panel.style.display = 'none';
+            // Hoặc nếu dùng class: panel.classList.remove('active');
+          });
+          // 3. Hiển thị panel MỤC TIÊU
+          targetPanel.style.display = 'block'; // Hoặc 'flex', 'grid' tùy thuộc vào CSS
+          // Hoặc nếu dùng class: targetPanel.classList.add('active');
+        });
+      });
+    });
+  </script>
+  <script src="header.js"></script>
+  <script src="speech-to-text.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+
+</html>

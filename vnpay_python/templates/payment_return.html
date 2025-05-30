@@ -1,0 +1,269 @@
+{% extends "base_layout.html" %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    
+    :root {
+        --main-bg: #0D0D0D;
+        --accent: #00FF41;
+        --secondary-accent: #00CC36;
+        --text: #F0F0F0;
+        --hover-glow: 0 0 10px rgba(0, 255, 65, 0.7);
+        --error-accent: #FF3333; /* Red for error */
+        --error-glow: 0 0 10px rgba(255, 51, 51, 0.7);
+    }
+    
+    body {
+        background-color: var(--main-bg);
+        color: var(--text);
+        font-family: 'Share Tech Mono', monospace;
+    }
+    
+    .cyber-container {
+        background-color: rgba(13, 13, 13, 0.9);
+        border: 1px solid var(--accent);
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .cyber-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        animation: scanning 3s linear infinite;
+    }
+    
+    @keyframes scanning {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    
+    .cyber-title {
+        color: var(--accent);
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 5px var(--accent);
+        position: relative;
+        display: block;
+        text-align: center;
+    }
+    
+    .cyber-title::after {
+        content: "//";
+        margin-left: 10px;
+        opacity: 0.8;
+    }
+    
+    .result-banner {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 3px;
+        text-align: center;
+        font-size: 18px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        animation: pulse-banner 2s infinite;
+    }
+    
+    .result-banner.success {
+        background-color: rgba(0, 255, 65, 0.1);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        box-shadow: var(--hover-glow);
+    }
+    
+    .result-banner.error {
+        background-color: rgba(255, 51, 51, 0.1);
+        border: 1px solid var(--error-accent);
+        color: var(--error-accent);
+        box-shadow: var(--error-glow);
+    }
+    
+    .result-banner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        animation: scan-glow 4s linear infinite;
+    }
+    
+    @keyframes pulse-banner {
+        0% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(0, 255, 65, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0); }
+    }
+    
+    @keyframes scan-glow {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(200%); }
+    }
+    
+    .transaction-details {
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--accent);
+        padding: 15px;
+        border-radius: 3px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .transaction-details p {
+        margin: 8px 0;
+        font-size: 14px;
+        color: var(--text);
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .transaction-details p span.label {
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .transaction-details p span.value {
+        color: var(--text);
+        text-align: right;
+    }
+    
+    .error-message {
+        color: var(--error-accent);
+        background-color: rgba(255, 51, 51, 0.1);
+        border: 1px solid var(--error-accent);
+        padding: 10px;
+        margin-top: 15px;
+        border-radius: 3px;
+        text-align: center;
+        font-size: 14px;
+    }
+    
+    .matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.07;
+    }
+    
+    .tech-decoration {
+        position: absolute;
+        font-size: 12px;
+        color: var(--accent);
+        opacity: 0.5;
+        user-select: none;
+    }
+    
+    .tech-decoration.top-left {
+        top: 10px;
+        left: 10px;
+    }
+    
+    .tech-decoration.bottom-right {
+        bottom: 10px;
+        right: 10px;
+    }
+</style>
+
+<canvas id="matrixCanvas" class="matrix-bg"></canvas>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="cyber-container">
+                <div class="tech-decoration top-left">[SYS:RESULT]</div>
+                <h1 class="cyber-title">{{ title }}</h1>
+                
+                {% if result %}
+                    <div class="result-banner {% if vnp_ResponseCode == '00' %}success{% else %}error{% endif %}">
+                        {{ result }}
+                    </div>
+                    
+                    <div class="transaction-details">
+                        <p><span class="label">Mã giao dịch</span><span class="value">{{ order_id }}</span></p>
+                        <p><span class="label">Tên người dùng</span><span class="value">{{ username }}</span></p>
+                        <p><span class="label">Số tiền</span><span class="value">{{ amount }} VND</span></p>
+                        <p><span class="label">Nội dung</span><span class="value">{{ order_desc }}</span></p>
+                        <p><span class="label">Mã giao dịch VNPAY</span><span class="value">{{ vnp_TransactionNo }}</span></p>
+                        <p><span class="label">Mã phản hồi</span><span class="value">{{ vnp_ResponseCode }} {% if vnp_ResponseCode == '00' %}- Thành công{% else %}- Lỗi{% endif %}</span></p>
+                    </div>
+                    
+                    {% if msg %}
+                        <div class="error-message">{{ msg }}</div>
+                    {% endif %}
+                {% else %}
+                    <div class="result-banner error">Không có dữ liệu giao dịch</div>
+                {% endif %}
+                
+                <div class="tech-decoration bottom-right">[CONN:SECURE]</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Matrix background effect
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00FF41';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(draw, 35);
+        
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    });
+</script>
+
+<!-- Thêm FontAwesome cho các icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}

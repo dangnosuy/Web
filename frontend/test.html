@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Text to Music - Example</title>
+    <!-- Sử dụng CDN TailwindCSS 2.2.19 -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-900 text-gray-100 min-h-screen flex items-center justify-center">
+
+    <!-- Container chính -->
+    <div class="max-w-3xl w-full bg-gray-800 p-4 rounded-lg shadow-md">
+        <!-- Header: chỉ có tab "Text to Music" + Credits -->
+        <div class="flex items-center justify-between mb-4">
+            <!-- Tab "Text to Music" -->
+            <div>
+                <span class="text-sm md:text-base px-3 py-2 border-b-2 border-purple-400 font-bold">
+                    Text to Music
+                </span>
+            </div>
+            <!-- Credits góc phải -->
+        </div>
+
+        <!-- Textarea nhập nội dung -->
+        <div class="relative mb-2">
+            <textarea
+                class="w-full bg-gray-700 p-3 rounded-md text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-400"
+                rows="4" maxlength="200" placeholder="Light and lively pop electronic..."></textarea>
+            <!-- Bộ đếm ký tự, ví dụ 0/200 -->
+            <div class="absolute bottom-2 right-3 text-xs text-gray-400">
+                0/200
+            </div>
+        </div>
+
+        <!-- Tabs con: Genre / Mood / Instrument -->
+        <div class="flex space-x-6 mb-3 text-sm md:text-base">
+            <button class="text-gray-400 hover:text-gray-200 focus:outline-none">
+                Genre
+            </button>
+            <button class="text-gray-400 hover:text-gray-200 focus:outline-none">
+                Mood
+            </button>
+            <!-- Đang chọn Instrument: gạch chân và chữ trắng -->
+            <button class="text-white border-b-2 border-purple-400 pb-1 focus:outline-none">
+                Instrument
+            </button>
+        </div>
+
+        <!-- Danh sách tag (Instrument) - cho scroll dọc nếu vượt khung -->
+        <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-6 max-h-48 overflow-y-auto pr-1">
+            <!-- Ví dụ 1 tag -->
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Piano
+            </div>
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Guitar
+            </div>
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Drums
+            </div>
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Bass
+            </div>
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Violin
+            </div>
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Saxophone
+            </div>
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Flute
+            </div>
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Trumpet
+            </div>
+            <div class="bg-gray-700 rounded-full px-3 py-1 text-center text-sm cursor-pointer hover:bg-gray-600">
+                Cello
+            </div>
+            <!-- ...v.v... Tuỳ bạn bổ sung thêm -->
+        </div>
+
+        <!-- Nút Generate -->
+        <div class="flex justify-end">
+            <button
+                class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-5 py-2 rounded-md transition-colors">
+                &#10027; Generate
+            </button>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Header Example</title>
+  <!-- Sử dụng CDN của Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="texttovideo.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+</head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+<style>
+  .avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 9999px;
+    border: 2px solid rgb(0, 199, 152);
+    object-fit: cover;
+  }
+
+  h1 {
+    padding-top: 3%;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+  }
+
+  h1:hover {
+    color: #b8b7b9;
+  }
+
+  .sect {
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+  }
+
+  .text {
+    text-align: center;
+    width: 70%;
+    font-size: 20px;
+    padding-bottom: 10px;
+  }
+
+  /* From Uiverse.io by mrpumps31232 */
+  .loading-wave {
+    width: 300px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .loading-bar {
+    width: 20px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #0a9de2;
+    border-radius: 5px;
+    animation: loading-wave-animation 1s ease-in-out infinite;
+  }
+
+  .loading-bar:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .loading-bar:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  .loading-bar:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes loading-wave-animation {
+    0% {
+      height: 10px;
+    }
+
+    50% {
+      height: 50px;
+    }
+
+    100% {
+      height: 10px;
+    }
+  }
+
+  svg {
+    width: 80%;
+    height: 150px;
+    margin-left: auto;
+    margin-right: 50px;
+  }
+
+  .line {
+    stroke: url(#grad1);
+    /* 💡 Gắn gradient động */
+    stroke-width: 2;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+
+  /* Glow effect */
+  svg defs filter feGaussianBlur {
+    stddeviation: 4;
+  }
+</style>
+
+<body class="bg-gray-50">
+  <!-- Header -->
+  <nav style="background: #0a0425; background-size: cover" class="border-b border-gray-200">
+    <div class="max-w-screen-xl mx-auto px-4 py-4 flex items-center">
+      <!-- Cột 1: Logo + Brand -->
+      <div class="flex items-center space-x-2 flex-shrink-0">
+        <img style="border: 2px solid green" class="w-16 h-16 rounded-full object-cover" src="img_source/logo.png"
+          alt="Logo" />
+        <span style="
+              background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+            " class="text-xl font-bold">
+          AlchemistAI
+        </span>
+      </div>
+
+      <!-- Cột 2: Menu (ẩn trên mobile, hiện khi md trở lên), flex:1 & justify-center để căn giữa -->
+      <div class="hidden md:flex flex-1 justify-center space-x-6">
+        <a href="index.html" class="text-white font-extrabold hover:border-b-2 hover:text-green-300 pb-1 text-lg">
+          Home
+        </a>
+        <a href="texttospeech.html"
+          class="text-white font-extrabold hover:border-b-2 hover:text-green-300 pb-1 text-lg">
+          Text to Speech
+        </a>
+        <a href="texttomusic.html" class="text-white font-extrabold hover:border-b-2 hover:text-green-300 pb-1 text-lg">
+          Text to Music
+        </a>
+        <a href="texttoimage.html" class="text-white font-extrabold hover:border-b-2 hover:text-green-300 pb-1 text-lg">
+          Text to Image
+        </a>
+        <a href="#" class="text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1 hover:text-blue-700 text-lg">
+          Text to Video
+        </a>
+      </div>
+
+      <!-- Cột 3: Avatar + nút Hamburger -->
+      <div class="flex items-center justify-end space-x-4 ml-auto md:ml-0">
+        <!-- Avatar chỉ hiển thị trên desktop -->
+        <img class="avatar hidden md:block" src="img_source/ho.jpg" alt="avatar" />
+
+        <!-- Nút hamburger (chỉ hiển thị trên mobile) -->
+        <button
+          class="md:hidden inline-flex items-center justify-end p-2 rounded text-white hover:bg-white hover:text-black"
+          onclick="toggleMenu()">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu dành cho mobile (ban đầu ẩn) -->
+    <div class="md:hidden px-4 pb-3 hidden justify-end" id="mobileMenu">
+      <a href="#" class="block text-white font-extrabold mt-2 hover:border-b-2 hover:text-green-300 pb-1 text-lg">
+        Home
+      </a>
+      <a href="texttospeech.html"
+        class="block text-white font-extrabold mt-2 hover:border-b-2 hover:text-green-300 pb-1 text-lg">
+        Text to Speech
+      </a>
+      <a href="texttomusic.html"
+        class="block text-white font-extrabold mt-2 hover:border-b-2 hover:text-green-300 pb-1 text-lg">
+        Text to Music
+      </a>
+      <a href="texttoimage.html"
+        class="block text-white font-extrabold mt-2 hover:border-b-2 hover:text-green-300 pb-1 text-lg">
+        Text to Image
+      </a>
+      <a href="#"
+        class="block text-blue-600 font-extrabold border-b-2 border-blue-600 mt-2 pb-1 hover:text-blue-700 text-lg">
+        Text to Video
+      </a>
+      <!-- Avatar trên mobile (nếu muốn hiển thị ở menu) -->
+    </div>
+  </nav>
+  <main style="
+        background: url('img_source/nenVideo.jpg') no-repeat center center fixed;
+        background-size: cover;
+      " class="min-h-screen flex flex-col items-center justify-start bg-gray-900 text-gray-100 space-y-4">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+      Text To Video
+    </h1>
+    <div class="text mb-4">
+      Turn your ideas into unique videos. Enter text, choose a genre, and let
+      AI create an amazing video.
+    </div>
+    <div class="max-w-7xl w-full bg-gray-800 p-4 rounded-lg shadow-md">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-sm md:text-base px-3 py-2 font-bold">
+          Text to Video
+        </span>
+
+        <!-- Credits góc phải -->
+      </div>
+      <textarea id="prompt"
+        class="w-full bg-gray-700 p-3 rounded-md resize-none text-sm md:text-base border border-gray-700 hover:border-purple-400 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
+        rows="5" maxlength="200" placeholder="Enter your idea..."></textarea>
+
+      <div class="flex flex-col md:flex-row gap-4 mt-4">
+        <!-- Style (chiếm hết chiều ngang mobile, 1/2 trên desktop) -->
+        <div class="w-full md:w-2/5 flex flex-col">
+          <label class="font-semibold mb-1">Style</label>
+          <select class="w-full border border-gray-300 rounded-md p-2 text-black">
+            <option>Realistic</option>
+            <option>Animated</option>
+            <option>Documentary</option>
+          </select>
+        </div>
+        <div class="md:w-2/5"></div>
+        <!-- Button (chiếm hết chiều ngang mobile, nhỏ lại trên desktop) -->
+        <div class="hidden md:flex md:w-1/5 justify-center items-end">
+          <button onclick="SendPrompt()"
+            class="w-full md:w-auto h-12 px-4 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-400 text-white font-bold text-base rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl flex items-center justify-center gap-x-2 whitespace-nowrap">
+            📽️ Generate
+          </button>
+        </div>
+
+        <!-- Button: Mobile -->
+        <div class="flex md:hidden w-full justify-center mt-4">
+          <button onclick="SendPrompt()"
+            class="w-1/3 h-12 px-4 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-400 text-white font-bold text-base rounded-full shadow-md transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl flex items-center justify-center gap-x-2 whitespace-nowrap">
+            📽️ Generate
+          </button>
+        </div>
+      </div>
+
+      <div class="relative flex items-center gap-4 mt-6">
+        <div id="mini-loader" class="absolute right-20 top-1/2 -translate-y-1/2 flex gap-2 items-end hidden">
+          <span class="dot"></span>
+          <span class="dot delay-1"></span>
+          <span class="dot delay-2"></span>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl w-full bg-gray-800 p-4 rounded-lg shadow-md">
+      <div class="flex items-center justify-between mb-4">
+        <span class="text-sm md:text-base px-3 py-2 font-bold"> Result </span>
+      </div>
+      <div id="video-list" class="max-h-250 overflow-y-auto space-y-4 bg-gray-50 p-4 rounded-lg shadow"></div>
+    </div>
+  </main>
+  <script>
+    //const slider = document.getElementById("durationRange");
+    //const display = document.getElementById("durationDisplay");
+
+    // Cập nhật giá trị khi người dùng kéo
+    //slider.addEventListener("input", function () {
+    //display.textContent = `${slider.value} second`;
+    //});
+
+    // Hiển thị giá trị ban đầu
+    //display.textContent = `${slider.value} second`;
+  </script>
+  <script>
+    anime({
+      targets: ".line",
+      strokeDashoffset: [anime.setDashoffset, 0],
+      easing: "easeInOutSine",
+      duration: 2000,
+      delay: anime.stagger(100),
+      direction: "alternate",
+      loop: true,
+    });
+  </script>
+  <script>
+    async function SendPrompt() {
+      const loader = document.getElementById("mini-loader");
+      const prompt = document.getElementById("prompt").value.trim();
+      const videoList = document.getElementById("video-list");
+      const style = document.querySelector("select").value;
+      const username = localStorage.getItem("username");
+
+      if (!prompt) {
+        alert("Vui lòng nhập nội dung trước khi tạo video.");
+        return;
+      }
+
+      loader.classList.remove("hidden");
+
+      // Gộp prompt + style thành một chuỗi duy nhất
+      const combinedPrompt = `prompt: ${prompt} | style: ${style}`;
+
+      try {
+        const response = await fetch(
+          "http://localhost:5555/api/texttovideo",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, prompt: combinedPrompt }),
+          }
+        );
+
+        const data = await response.json();
+        if (data.success) {
+          const videoUrl = data.file_path;
+
+          const videoElement = document.createElement("video");
+          videoElement.src = videoUrl;
+          videoElement.controls = true;
+          videoElement.classList.add("w-full", "rounded-md", "shadow-md");
+
+          const label = document.createElement("p");
+          label.textContent = `${videoUrl
+            .split("/")
+            .pop()} - ${new Date().toLocaleString()}`;
+          label.classList.add("text-sm", "text-gray-700");
+
+          const wrapper = document.createElement("div");
+          wrapper.classList.add("mb-4");
+          wrapper.appendChild(label);
+          wrapper.appendChild(videoElement);
+
+          videoList.prepend(wrapper);
+          while (videoList.childNodes.length > 5) {
+            videoList.removeChild(videoList.lastChild);
+          }
+        } else {
+          alert("Lỗi tạo video: " + data.error);
+        }
+      } catch (error) {
+        console.error("Lỗi khi gửi yêu cầu:", error);
+      } finally {
+        loader.classList.add("hidden");
+      }
+    }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const username = localStorage.getItem("username");
+      if (!username) {
+        alert("Chưa đăng nhập! Vui lòng đăng nhập lại.");
+        window.location.href = "/frontend/Sign_in.html";
+        return;
+      }
+
+      fetch(`http://localhost:5555/api/get_ttv_data?username=${username}`)
+        .then((res) => res.json())
+        .then((data) => {
+          const videoList = document.getElementById("video-list");
+          videoList.innerHTML = "";
+
+          if (data.success && data.ttv_data.length > 0) {
+            data.ttv_data.forEach((video, index) => {
+              // Tách prompt và style từ input_text
+              let promptText = "",
+                styleText = "";
+              if (video.input_text) {
+                const arr = video.input_text.split("|").map((s) => s.trim());
+                for (let part of arr) {
+                  if (part.toLowerCase().startsWith("prompt:"))
+                    promptText = part.slice(7).trim();
+                  if (part.toLowerCase().startsWith("style:"))
+                    styleText = part.slice(6).trim();
+                }
+              }
+
+              // Tạo khung hiển thị
+              const wrapper = document.createElement("div");
+              wrapper.className = "flex bg-white rounded shadow p-4 mb-4";
+
+              // Video bên trái
+              const videoEl = document.createElement("video");
+              videoEl.src = `http://localhost:5555/${video.result}`;
+              videoEl.controls = true;
+              videoEl.className = "w-1/4 rounded";
+
+              // Thông tin bên phải
+              const info = document.createElement("div");
+              info.className = "ml-4 flex flex-col justify-center w-3/4";
+
+              // Prompt dòng 1
+              const title = document.createElement("p");
+              title.className = "text-base font-semibold text-gray-800";
+              title.textContent = `Video ${index + 1}: ${promptText}`;
+
+              // Style dòng 2
+              const styleP = document.createElement("p");
+              styleP.className = "text-sm text-gray-600";
+              styleP.textContent = `Style: ${styleText}`;
+
+              info.appendChild(title);
+              info.appendChild(styleP);
+
+              // Gộp vào wrapper
+              wrapper.appendChild(videoEl);
+              wrapper.appendChild(info);
+              videoList.appendChild(wrapper);
+            });
+          } else {
+            videoList.innerHTML =
+              "<p class='text-gray-500'>Chưa có video nào được tạo.</p>";
+          }
+        })
+        .catch((error) => {
+          console.error("Lỗi khi lấy video:", error);
+          document.getElementById("video-list").innerHTML =
+            "<p class='text-red-500'>Lỗi khi tải video.</p>";
+        });
+    });
+  </script>
+  
+</body>
+<script src="chatbot.js"></script>
+
+</html>

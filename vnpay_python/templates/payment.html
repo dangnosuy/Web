@@ -1,0 +1,487 @@
+{% extends "base_layout.html" %}
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+    
+    :root {
+        --main-bg: #0D0D0D;
+        --accent: #00FF41;
+        --secondary-accent: #00CC36;
+        --text: #F0F0F0;
+        --hover-glow: 0 0 10px rgba(0, 255, 65, 0.7);
+    }
+    
+    body {
+        background-color: var(--main-bg);
+        color: var(--text);
+        font-family: 'Share Tech Mono', monospace;
+    }
+    
+    .cyber-container {
+        background-color: rgba(13, 13, 13, 0.9);
+        border: 1px solid var(--accent);
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .cyber-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        animation: scanning 3s linear infinite;
+    }
+    
+    @keyframes scanning {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    
+    .cyber-title {
+        color: var(--accent);
+        font-size: 24px;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 5px var(--accent);
+        position: relative;
+        display: block;
+        text-align: center;
+    }
+    
+    .cyber-title::after {
+        content: "//";
+        margin-left: 10px;
+        opacity: 0.8;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+        position: relative;
+        width: 100%;
+    }
+    
+    .form-control {
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--accent);
+        border-radius: 0;
+        color: var(--text);
+        padding: 10px 12px;
+        transition: all 0.3s ease;
+        font-family: 'Share Tech Mono', monospace;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    select.form-control {
+  /* Cho phép wrap */
+  white-space: normal;
+  /* Chiều cao linh hoạt */
+  line-height: 1.5;
+  min-height: 2.5em;
+  height: auto !important;
+  /* Tùy chọn: ẩn mũi tên mặc định để custom */
+  appearance: none;
+  /* Thêm icon mũi tên nếu muốn */
+  background-image: url('data:image/svg+xml;charset=us…');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px; /* chừa chỗ cho icon */
+}
+    .form-control:focus {
+        box-shadow: var(--hover-glow);
+        border-color: var(--accent);
+        outline: none;
+    }
+    
+    .form-control::placeholder {
+        color: rgba(240, 240, 240, 0.5);
+    }
+    
+    textarea.form-control {
+        resize: vertical;
+    }
+    
+    label {
+        color: var(--accent);
+        font-size: 13px;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-align: left;
+        display: block;
+    }
+    
+    .cyber-btn {
+        background-color: transparent;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-family: 'Share Tech Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        padding: 10px 25px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        z-index: 1;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    .cyber-btn::before {
+        content: "";
+        position: absolute;
+        background: var(--accent);
+        width: 0;
+        height: 100%;
+        left: -5px;
+        top: 0;
+        transition: width 0.4s ease;
+        z-index: -1;
+        transform: skewX(-15deg);
+    }
+    
+    .cyber-btn:hover {
+        color: var(--main-bg);
+        box-shadow: var(--hover-glow);
+    }
+    
+    .cyber-btn:hover::before {
+        width: 110%;
+    }
+    
+    .hidden-field {
+        display: none;
+    }
+    
+    .payment-info {
+        position: relative;
+        padding: 12px;
+        border-left: 2px solid var(--accent);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .matrix-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.07;
+    }
+    
+    .ai-assistant {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: var(--accent);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.7);
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0.7); }
+        70% { box-shadow: 0 0 0 15px rgba(0, 255, 65, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 255, 65, 0); }
+    }
+    
+    .amount-input {
+        position: relative;
+        width: 100%;
+    }
+    
+    .amount-input:after {
+        content: "VND";
+        position: absolute;
+        right: 15px;
+        top: 12px;
+        color: var(--accent);
+    }
+    
+    .amount-in-words {
+        width: 100%;
+        display: block;
+        text-align: left;
+        margin-top: 4px;
+    }
+    
+    @keyframes counting {
+        0% { color: var(--secondary-accent); }
+        100% { color: var(--text); }
+    }
+    
+    .tech-decoration {
+        position: absolute;
+        font-size: 12px;
+        color: var(--accent);
+        opacity: 0.5;
+        user-select: none;
+    }
+    
+    .tech-decoration.top-left {
+        top: 10px;
+        left: 10px;
+    }
+    
+    .tech-decoration.bottom-right {
+        bottom: 10px;
+        right: 10px;
+    }
+    .popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    min-width: 250px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+</style>
+
+<canvas id="matrixCanvas" class="matrix-bg"></canvas>
+{% if error %}
+  <div id="errorPopup" class="alert alert-danger popup">
+    {{ error }}
+  </div>
+{% endif %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="cyber-container">
+                <div class="tech-decoration top-left">[SYS:INIT]</div>
+                <h1 class="cyber-title">AI Payment Gateway</h1>
+                <div class="payment-info">
+                    <p>Thanh toán dịch vụ ALChemistAI</p>
+                    <p class="small" id="timestamp">Thời gian: <span id="currentTime">{% now "Y-m-d H:i:s" %}</span></p>
+                </div>
+                
+                <form action="{% url "payment" %}" id="create_form" method="post">
+                    <!-- Các trường ẩn -->
+                    <div class="hidden-field">
+                        <input type="hidden" name="order_type" id="order_type" value="topup">
+                        <input type="hidden" name="order_id" id="order_id" value="{% now "YmdHis" %}">
+                        <input type="hidden" name="language" id="language" value="vn">
+                    </div>
+                    
+                    <!-- Tên người dùng -->
+                    <div class="form-group">
+                        <label for="username_input">
+                            <i class="fas fa-user"></i> Username
+                        </label>
+                        <input class="form-control" id="username" name="username" type="text" placeholder="Nhập uesrname cần nạp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email_input">
+                            <i class="fas fa-file-invoice"></i> Email
+                        </label>
+                        <input class="form-control" id="email" name="email" type="text" placeholder="Nhập email cần nạp cho tài khoản" required>
+                    </div>
+                    
+                    <!-- Số tiền thanh toán -->
+                    <div class="form-group">
+                        <label for="amount">
+                            <i class="fas fa-money-bill-wave"></i> Số tiền thanh toán
+                        </label>
+                        <div class="amount-input">
+                            <input class="form-control" id="amount" name="amount" type="number" value="1000000" min="10000" step="10000" required>
+                        </div>
+                        <small class="text-muted amount-in-words" id="amountInWords">Một triệu đồng</small>
+                    </div>
+                    
+                    <!-- Nội dung thanh toán -->
+                    <div class="form-group">
+                        <label for="order_desc">
+                            <i class="fas fa-file-invoice"></i> Nội dung thanh toán
+                        </label>
+                        <textarea class="form-control" cols="20" id="order_desc" name="order_desc" rows="2">Thanh toán dịch vụ ALChemistAI - {% now "Y-m-d H:i:s" %}</textarea>
+                    </div>
+                    
+                    <!-- Ngân hàng -->
+                    <div class="form-group">
+                        <label for="bank_code">
+                            <i class="fas fa-university"></i> Chọn ngân hàng
+                        </label>
+                        <select name="bank_code" id="bank_code" class="form-control">
+                            <option value="">Chọn phương thức thanh toán</option>
+                            <option value="NCB">NCB - Ngân hàng Quốc dân</option>
+                            <option value="AGRIBANK">Agribank - Ngân hàng Nông nghiệp</option>
+                            <option value="SCB">SCB - Ngân hàng Sài Gòn</option>
+                            <option value="SACOMBANK">Sacombank - Ngân hàng Sài Gòn Thương Tín</option>
+                            <option value="EXIMBANK">Eximbank - Ngân hàng Xuất Nhập Khẩu</option>
+                            <option value="MSBANK">MSBANK - Ngân hàng Hàng Hải</option>
+                            <option value="NAMABANK">NamABank - Ngân hàng Nam Á</option>
+                            <option value="VNMART">VnMart - Ví điện tử</option>
+                            <option value="VIETINBANK">Vietinbank - Ngân hàng Công Thương</option>
+                            <option value="VIETCOMBANK">VCB - Ngân hàng Ngoại Thương</option>
+                            <option value="HDBANK">HDBank - Ngân hàng Phát triển TP.HCM</option>
+                            <option value="DONGABANK">Dong A - Ngân hàng Đông Á</option>
+                            <option value="TPBANK">TPBank - Ngân hàng Tiên Phong</option>
+                            <option value="OJB">OceanBank - Ngân hàng Đại Dương</option>
+                            <option value="BIDV">BIDV - Ngân hàng Đầu tư và Phát triển</option>
+                            <option value="TECHCOMBANK">Techcombank - Ngân hàng Kỹ thương</option>
+                            <option value="VPBANK">VPBank - Ngân hàng Việt Nam Thịnh Vượng</option>
+                            <option value="MBBANK">MBBank - Ngân hàng Quân đội</option>
+                            <option value="ACB">ACB - Ngân hàng Á Châu</option>
+                            <option value="OCB">OCB - Ngân hàng Phương Đông</option>
+                            <option value="IVB">IVB - Ngân hàng INDOVINA</option>
+                            <option value="VISA">VISA / MASTER - Thẻ quốc tế</option>
+                        </select>
+                    </div>
+
+                    {% csrf_token %}
+                    <div class="form-group text-center mt-3">
+                        <button type="submit" class="cyber-btn" id="submitBtn">Xác nhận thanh toán</button>
+                    </div>
+                </form>
+                <div class="tech-decoration bottom-right">[CONN:SECURE]</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ai-assistant" title="AI Assistant">
+    <i class="fas fa-robot"></i>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const popup = document.getElementById('errorPopup');
+    if (popup) {
+      // Tự động ẩn sau 5 giây
+      setTimeout(() => {
+        popup.style.transition = 'opacity 0.5s';
+        popup.style.opacity = '0';
+        setTimeout(() => popup.remove(), 500);
+      }, 3000);
+    }
+  });
+    // Matrix background effect
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        // Ký tự cho hiệu ứng Matrix
+        const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        
+        // Mảng drop - vị trí Y của mỗi cột
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00FF41';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(draw, 35);
+        
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Prevent form resubmission on page reload
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
+        // Reset form fields on page load
+        const form = document.getElementById('create_form');
+        form.reset();
+        document.getElementById('amount').value = '1000000';
+        document.getElementById('amountInWords').textContent = 'Một triệu đồng';
+        updateTime();
+    });
+    
+    // Hiệu ứng đếm số tiền
+    document.getElementById('amount').addEventListener('input', function() {
+        const amount = parseInt(this.value);
+        const amountTextElement = document.getElementById('amountInWords');
+        
+        function numberToWords(num) {
+            if (num >= 1000000000) {
+                return Math.floor(num / 1000000000) + ' tỷ ' + 
+                       numberToWords(num % 1000000000);
+            } else if (num >= 1000000) {
+                return Math.floor(num / 1000000) + ' triệu ' + 
+                       (num % 1000000 > 0 ? numberToWords(num % 1000000) : '') + 'đồng';
+            } else if (num >= 1000) {
+                return Math.floor(num / 1000) + ' nghìn ' + 
+                       (num % 1000 > 0 ? numberToWords(num % 1000) : '') + 'đồng';
+            } else {
+                return num + ' đồng';
+            }
+        }
+        
+        amountTextElement.textContent = numberToWords(amount);
+        amountTextElement.style.animation = 'counting 1s';
+        setTimeout(() => {
+            amountTextElement.style.animation = '';
+        }, 1000);
+    });
+    
+    // Hiệu ứng cho nút thanh toán
+    document.getElementById('submitBtn').addEventListener('mouseover', function() {
+        this.textContent = ">> Xử lý thanh toán <<";
+    });
+    
+    document.getElementById('submitBtn').addEventListener('mouseout', function() {
+        this.textContent = "Xác nhận thanh toán";
+    });
+    
+    // Cập nhật thời gian thực
+    function updateTime() {
+        const now = new Date();
+        const formatted = now.getFullYear() + '-' + 
+                         String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                         String(now.getDate()).padStart(2, '0') + ' ' + 
+                         String(now.getHours()).padStart(2, '0') + ':' + 
+                         String(now.getMinutes()).padStart(2, '0') + ':' + 
+                         String(now.getSeconds()).padStart(2, '0');
+        
+        document.getElementById('currentTime').textContent = formatted;
+        document.getElementById('order_desc').value = 'Thanh toán dịch vụ ALChemistAI - ' + formatted;
+    }
+    
+    setInterval(updateTime, 1000);
+    updateTime();
+</script>
+
+<!-- Thêm FontAwesome cho các icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}

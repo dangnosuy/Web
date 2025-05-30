@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <title>Sign in | AlchemistAI</title>
+</head>
+<body>
+    <div id="wraper">
+        <form id="login_register">
+            <div class="control">
+                <a href="Sign_in.html" id="return" style="display: none;">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <a href="index.html" id="exit">
+                    <i class="fa-solid fa-xmark"></i>
+                </a>
+            </div>
+            <div class="logo">
+                <img class="image_logo" src="img_source/logo.png">
+                <span class="name_logo">AlchemistAI</span>
+            </div>
+            <h1 class="heading"> Sign in to Your Account</h1>
+            <div class="group">
+                <label>Username</label>
+                <br>
+                <div class="form" id="username_form">
+                    <i class="far fa-user"></i>
+                    <input id="username" type="text" class="input" placeholder="Enter username">  
+                </div>
+            </div>
+            <div id="SignIn_form">
+                <div class="group">
+                    <label>Password</label>
+                    <br>
+                    <div class="form" id="password_form">
+                        <i class="fa fa-key"></i>
+                        <input id="password" type="password" class="input" placeholder="Enter password">  
+                        <div class="eye">
+                            <i class="far fa-eye"></i>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <input type="checkbox" id="rememberMe" name="rememberMe">
+                    <label for="rememberMe">Remember me</label>
+                    <span id="reset_password">Forgot your password?</span>                    
+                </div> 
+                <span id="error_message"></span> 
+                <button type="submit" class="submit" id="sign_in">Sign In</button>
+                <div class="register">
+                    <span>Don't have an account?</span>
+                    <a href="Sign_up.html">
+                        <span >Sign up</span>
+                    </a>
+                </div>        
+                <hr>
+                <div>
+                    <div class="other">
+                        <span>Google</span>
+                    </div>
+                </div>
+            </div>
+            <div id="ResetPassword_form">
+                <div class="group">
+                    <label>Email</label>
+                    <br>
+                    <div class="form" id="email_form">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" class="input" id="email" placeholder="Enter email">  
+                    </div>
+                </div>
+                <span id="error_message_verify"></span> 
+                <button type="submit" class="submit" id="submit_reset">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="login.js"></script>
+</html>
