@@ -11,10 +11,11 @@ CORS(app)
 
 # MySQL Connection
 connection = pymysql.connect(
-    host='localhost',
+    host='trolley.proxy.rlwy.net',
+    port=42207,
     user='root',
-    password='vantruong',
-    database='texttovideo',
+    password='vBLNudYkRGteqDlaHGUjkRYETabeLJoU',
+    database='texttoeverything',
     charset='utf8mb4',
     cursorclass=pymysql.cursors.DictCursor
 )
@@ -49,7 +50,8 @@ def InsertFileToDatabase(username, prompt, type, result_path):
     except Exception as e:
         print("Insert error:", e)
         return False
-
+    
+VIDEO_GENERATION_COST = 50000
 # API: Tạo video
 @app.route('/api/texttovideo', methods=['POST'])
 def TextToVideo():
@@ -63,12 +65,41 @@ def TextToVideo():
         return jsonify({"success": False, "error": "Thiếu username hoặc prompt"}), 400
 
     try:
+        with connection.cursor() as cursor:
+            # Lock tài khoản để kiểm tra số dư và trừ tiền
+            cursor.execute("SELECT balance FROM users WHERE username = %s FOR UPDATE", (username,))
+            row = cursor.fetchone()
+            if not row:
+                return jsonify({'success': False, 'error': 'Người dùng không tồn tại'}), 404
+
+            balance = float(row['balance'] or 0)
+            if balance < VIDEO_GENERATION_COST:
+                return jsonify({
+                    'success': False,
+                    'error': 'Số dư không khả dụng. Cần nạp thêm!!'
+                }), 402
+
+            # Trừ tiền và lưu lịch sử giao dịch
+            cursor.execute(
+                "UPDATE users SET balance = balance - %s WHERE username = %s",
+                (VIDEO_GENERATION_COST, username)
+            )
+            cursor.execute(
+                "INSERT INTO thanhtoan (username, type, amount) VALUES (%s, %s, %s)",
+                (username, 'text_to_video', VIDEO_GENERATION_COST)
+            )
+            
+        connection.commit()
+    except Exception as e:
+        connection.rollback()
+        return jsonify({"success": False, "error": "Không thể thực hiện giao dịch: " + str(e)}), 500
+    app.logger.info("Thanh toán thành công!")
+    try:
         full_prompt = f"{style} style: {original_prompt}"
         result = subscribe("fal-ai/wan-t2v", {
             "prompt": full_prompt,
             "logs": True
         })
-
 
         video_url = result.get("video", {}).get("url")
         if not video_url:
