@@ -1,0 +1,125 @@
+:root {
+  --color-dark: #0b0040;
+  --color-primary: #9b5fff;
+  --color-grad-start: #00c6ff;
+  --color-grad-end: #9932ff;
+  --color-card: #1a124d;
+}
+.nav-link:focus {
+  outline: none;
+}
+
+body {
+  background-color: var(--color-dark);
+  color: #ffffff;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Hide default focus outline, but keep accessibility */
+a:focus,
+button:focus {
+  outline: 2px dashed var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ---------- Utility classes (complement Tailwind) ---------- */
+.text-primary {
+  color: var(--color-primary) !important;
+}
+
+.bg-dark {
+  background-color: var(--color-dark) !important;
+}
+
+.bg-card {
+  background-color: var(--color-card) !important;
+}
+
+.bg-gradient {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-grad-start),
+    var(--color-grad-end)
+  );
+}
+
+.gradient-text {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-grad-start),
+    var(--color-grad-end)
+  );
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.btn-gradient {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-grad-start),
+    var(--color-grad-end)
+  );
+  color: #ffffff;
+  transition: opacity 0.3s ease;
+}
+
+.btn-gradient:hover,
+.btn-gradient:focus {
+  opacity: 0.9;
+}
+
+/* ---------- Card & interactive effects ---------- */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.nav-link {
+  transition: color 0.25s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: var(--color-primary);
+}
+
+.avatar-ring {
+  box-shadow: 0 0 0 2px var(--color-grad-start);
+  border-radius: 9999px;
+}
+
+/* ---------- Animations ---------- */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse-hover:hover {
+  animation: pulse 0.6s ease-in-out;
+}
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: 1.75rem; /* 28px */
+  }
+
+  .hero-sub {
+    font-size: 1rem; /* 16px */
+  }
+
+  .feature-item {
+    padding: 1.5rem; /* reduce padding on small */
+  }
+}

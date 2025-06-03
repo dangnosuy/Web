@@ -8,20 +8,14 @@
   <title>Header Example</title>
   <!-- Sử dụng CDN của Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="texttovideo.css" />
+  <link rel="stylesheet" href="./css/texttovideo.css" />
+  <link rel="stylesheet" href="./css/header.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
 </head>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 <style>
-  .avatar {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 9999px;
-    border: 2px solid rgb(0, 199, 152);
-    object-fit: cover;
-  }
-
-  h1 {
+    h1 {
     padding-top: 3%;
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
       sans-serif;
@@ -113,83 +107,54 @@
 
 <body class="bg-gray-50">
   <!-- Header -->
-  <nav style="background: #0a0425; background-size: cover" class="border-b border-gray-200">
-    <div class="max-w-screen-xl mx-auto px-4 py-4 flex items-center">
-      <!-- Cột 1: Logo + Brand -->
-      <div class="flex items-center space-x-2 flex-shrink-0">
-        <img style="border: 2px solid green" class="w-16 h-16 rounded-full object-cover" src="img_source/logo.png"
-          alt="Logo" />
-        <span style="
-              background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-            " class="text-xl font-bold">
-          AlchemistAI
-        </span>
+  <header>
+    <button class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="logo">
+      <img style="border: 2px solid #3b82f6 ;" class="w-16 h-16 rounded-full object-cover" src="./asserts/images/logo.png"
+      alt="Logo"
+      />
+      <span class="logo_text" style="background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;" class="text-xl font-bold">
+      AlchemistAI</span>
+    </div>
+    <nav class="menu">
+      <a href="index.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Home</a>
+      <a href="texttospeech.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Text to Speech</a>
+      <a href="texttoimage.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text to Image</a>
+      <a href="texttomusic.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text to Music</a>
+      <a href="#" class="text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1 hover:text-blue-700 text-lg">Text to Video</a>
+    </nav>
+      <div class="login-container">
+          <a href="sign_in.html" id="sign_in" class="login-button">Login</a>
       </div>
-
-      <!-- Cột 2: Menu (ẩn trên mobile, hiện khi md trở lên), flex:1 & justify-center để căn giữa -->
-      <div class="hidden md:flex flex-1 justify-center space-x-6">
-        <a href="index.html" class="text-white font-extrabold hover:border-b-2 hover:text-green-300 pb-1 text-lg">
-          Home
+    <div class="avatar-container">
+      <div style="color: aliceblue; margin-right: 0.75rem; justify-self: center; align-self: center;" id="user-balance">Đang tải…</div>
+      <img src="./asserts/images/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg">
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="profile.html" class="dropdown-menu-item">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
         </a>
-        <a href="texttospeech.html"
-          class="text-white font-extrabold hover:border-b-2 hover:text-green-300 pb-1 text-lg">
-          Text to Speech
+        <div class="dropdown-divider"></div>
+        <a href="settings.html" class="dropdown-menu-item">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
         </a>
-        <a href="texttomusic.html" class="text-white font-extrabold hover:border-b-2 hover:text-green-300 pb-1 text-lg">
-          Text to Music
+        <div class="dropdown-divider"></div>
+        <a href="Sign_in.html" class="dropdown-menu-item logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Log out</span>
         </a>
-        <a href="texttoimage.html" class="text-white font-extrabold hover:border-b-2 hover:text-green-300 pb-1 text-lg">
-          Text to Image
-        </a>
-        <a href="#" class="text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1 hover:text-blue-700 text-lg">
-          Text to Video
-        </a>
-      </div>
-
-      <!-- Cột 3: Avatar + nút Hamburger -->
-      <div class="flex items-center justify-end space-x-4 ml-auto md:ml-0">
-        <!-- Avatar chỉ hiển thị trên desktop -->
-        <img class="avatar hidden md:block" src="img_source/ho.jpg" alt="avatar" />
-
-        <!-- Nút hamburger (chỉ hiển thị trên mobile) -->
-        <button
-          class="md:hidden inline-flex items-center justify-end p-2 rounded text-white hover:bg-white hover:text-black"
-          onclick="toggleMenu()">
-          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
       </div>
     </div>
-
-    <!-- Menu dành cho mobile (ban đầu ẩn) -->
-    <div class="md:hidden px-4 pb-3 hidden justify-end" id="mobileMenu">
-      <a href="#" class="block text-white font-extrabold mt-2 hover:border-b-2 hover:text-green-300 pb-1 text-lg">
-        Home
-      </a>
-      <a href="texttospeech.html"
-        class="block text-white font-extrabold mt-2 hover:border-b-2 hover:text-green-300 pb-1 text-lg">
-        Text to Speech
-      </a>
-      <a href="texttomusic.html"
-        class="block text-white font-extrabold mt-2 hover:border-b-2 hover:text-green-300 pb-1 text-lg">
-        Text to Music
-      </a>
-      <a href="texttoimage.html"
-        class="block text-white font-extrabold mt-2 hover:border-b-2 hover:text-green-300 pb-1 text-lg">
-        Text to Image
-      </a>
-      <a href="#"
-        class="block text-blue-600 font-extrabold border-b-2 border-blue-600 mt-2 pb-1 hover:text-blue-700 text-lg">
-        Text to Video
-      </a>
-      <!-- Avatar trên mobile (nếu muốn hiển thị ở menu) -->
-    </div>
-  </nav>
+  </div>
+  </header>
   <main style="
-        background: url('img_source/nenVideo.jpg') no-repeat center center fixed;
+        background: url('./asserts/images/nenVideo.jpg') no-repeat center center fixed;
         background-size: cover;
       " class="min-h-screen flex flex-col items-center justify-start bg-gray-900 text-gray-100 space-y-4">
     <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
@@ -415,6 +380,6 @@
   </script>
   
 </body>
-<script src="chatbot.js"></script>
-
+<script src="./js/chatbot.js"></script>
+<script src="./js/header.js"></script>
 </html>
