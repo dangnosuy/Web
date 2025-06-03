@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tài khoản</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./css/account.css" />
+  </head>
+  <body>
+    <div class="account-header">
+      <h1 class="account-title">Tài khoản</h1>
+      <div class="header-actions">
+        <img
+          id="avatarImg"
+          class="avatar"
+          src="img_source/ho.jpg"
+          alt="avatar"
+          onclick="document.getElementById('avatarInput').click()"
+        />
+        <input
+          type="file"
+          id="avatarInput"
+          accept="image/*"
+          style="display: none"
+          onchange="changeAvatar(event)"
+        />
+        <div class="toggle-container">
+          <span style="font-size: 16px; margin-right: 6px">🌙</span>
+          <label class="switch">
+            <input
+              id="button-darkmode"
+              type="checkbox"
+              name="dark-mode"
+              checked
+            />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="account-container">
+      <nav class="sidebar">
+        <ul>
+          <li class="active">
+            <a href="#" onclick="showTab('Detail',event)">Chi tiết</a>
+          </li>
+          <li>
+            <a href="#" onclick="showTab('Deposit',event)">Lịch sử nạp tiền</a>
+          </li>
+          <li>
+            <a href="#" onclick="showTab('product',event)">Sản phẩm gần đây</a>
+          </li>
+        </ul>
+      </nav>
+      <main class="main-content">
+        <div id="tab-Detail" class="tab-content">
+          <h2>Chi tiết</h2>
+          <div class="details-table">
+            <div class="details-row">
+              <div class="details-label">Địa chỉ email:</div>
+              <div class="details-value" id="emailField"></div>
+            </div>
+            <div class="details-row">
+              <div class="details-label">Tên đăng nhập:</div>
+              <div class="details-value" id="usernameField"></div>
+            </div>
+            <div class="details-row">
+              <div class="details-label">Ngày tạo tài khoản:</div>
+              <div class="details-value" id="createdAtField"></div>
+            </div>
+          </div>
+        </div>
+        <div id="tab-Deposit" class="tab-content" style="display: none">
+          <h2>Lịch sử nạp tiền</h2>
+          <div id="depositHistoryList"></div>
+        </div>
+
+        <div id="tab-product" class="tab-content" style="display: none">
+          <h2>Sản phẩm gần đây</h2>
+          <div id="recentProductList"></div>
+        </div>
+      </main>
+    </div>
+  </body>
+
+  <script>
+    function changeAvatar(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        document.getElementById("avatarImg").src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function showTab(tab, event) {
+      event = event || window.event;
+      document
+        .querySelectorAll(".tab-content")
+        .forEach((div) => (div.style.display = "none"));
+      document.getElementById("tab-" + tab).style.display = "block";
+      document
+        .querySelectorAll(".sidebar li")
+        .forEach((li) => li.classList.remove("active"));
+      if (event && event.target)
+        event.target.closest("li").classList.add("active");
+      if (tab === "product") loadRecentProducts();
+      if (tab === "Deposit") loadDepositHistory();
+    }
+
+    // Lấy user info khi vào trang
+    window.onload = function () {
+      showTab("Detail", new Event("load"));
+      const currentUsername = localStorage.getItem("username");
+      if (currentUsername) {
+        fetch(
+          `http://127.0.0.1:5555/api/get_user_info?username=${encodeURIComponent(
+            currentUsername
+          )}`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success) {
+              document.getElementById("emailField").textContent = data.email;
+              document.getElementById("usernameField").textContent =
+                data.username;
+              document.getElementById("createdAtField").textContent =
+                data.created_at;
+            } else {
+              console.error("Lỗi:", data.error);
+            }
+          })
+          .catch((err) => console.error("Lỗi fetch API:", err));
+      } else {
+        document.getElementById("usernameField").textContent =
+          "Bạn chưa đăng nhập!";
+      }
+    };
+
+    // Load 5 sản phẩm gần nhất
+    function loadRecentProducts() {
+      const username = localStorage.getItem("username");
+      const productDiv = document.getElementById("recentProductList");
+      productDiv.innerHTML = "Đang tải...";
+
+      if (!username) {
+        productDiv.textContent = "Bạn chưa đăng nhập.";
+        return;
+      }
+      fetch(
+        `http://127.0.0.1:5555/api/recent_products?username=${encodeURIComponent(
+          username
+        )}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.products.length > 0) {
+            productDiv.innerHTML = data.products
+              .map((p) => {
+                let title = p.input_text || "(không có mô tả)";
+                let type = p.conversion_type || "";
+                let file = p.result || "";
+                let time = p.timestamp
+                  ? new Date(p.timestamp).toLocaleString()
+                  : "";
+                let filePreview = "";
+                if (type === "text_to_image") {
+                  filePreview = `<img src="/${file}" style="max-width:120px;max-height:80px;border-radius:6px;">`;
+                } else if (type === "text_to_video") {
+                  filePreview = `<video src="/${file}" controls style="max-width:150px;max-height:80px;border-radius:6px"></video>`;
+                } else if (type === "text_to_music") {
+                  filePreview = `<audio src="/${file}" controls style="width:120px"></audio>`;
+                } else if (type === "text_to_speech") {
+                  filePreview = `<audio src="/${file}" controls style="width:120px"></audio>`;
+                }
+                return `
+                  <div style="display:flex;align-items:center;margin-bottom:16px;background:#f7f7f9;padding:12px;border-radius:8px">
+                    <div style="flex:0 0 160px">${filePreview}</div>
+                    <div style="flex:1 1 auto;padding-left:12px">
+                      <div><strong>Loại:</strong> ${type.replaceAll(
+                        "_",
+                        " "
+                      )}</div>
+                      <div><strong>Mô tả:</strong> ${title}</div>
+                      <div><small>${time}</small></div>
+                    </div>
+                  </div>
+                `;
+              })
+              .join("");
+          } else {
+            productDiv.innerHTML = "<em>Chưa có sản phẩm nào.</em>";
+          }
+        })
+        .catch((err) => {
+          productDiv.textContent = "Không lấy được sản phẩm.";
+          console.error(err);
+        });
+    }
+  </script>
+  <script>
+    function loadDepositHistory() {
+      const username = localStorage.getItem("username");
+      const depositDiv = document.getElementById("depositHistoryList");
+      depositDiv.innerHTML = "Đang tải...";
+
+      if (!username) {
+        depositDiv.textContent = "Bạn chưa đăng nhập.";
+        return;
+      }
+      fetch(
+        `http://127.0.0.1:5555/api/get_transaction_history?username=${encodeURIComponent(
+          username
+        )}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && data.transactions.length > 0) {
+            depositDiv.innerHTML = `
+          <table style="width:100%;border-collapse:collapse;margin-top:8px;">
+            <thead>
+              <tr>
+                <th>Thời gian</th>
+                <th>Mô tả</th>
+                <th>Số tiền</th>
+                <th>Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.transactions
+                .map(
+                  (tran) => `
+                  <tr>
+                    <td>${new Date(tran.created_at).toLocaleString()}</td>
+                    <td>${tran.order_desc}</td>
+                    <td>${Number(tran.amount).toLocaleString()}₫</td>
+                    <td>
+                      ${
+                        tran.status == 1
+                          ? '<span style="color:green">Thành công</span>'
+                          : '<span style="color:gray">Chờ duyệt</span>'
+                      }
+                    </td>
+                  </tr>
+                `
+                )
+                .join("")}
+            </tbody>
+          </table>
+        `;
+          } else {
+            depositDiv.innerHTML = "<em>Chưa có lịch sử nạp tiền nào.</em>";
+          }
+        })
+        .catch((err) => {
+          depositDiv.textContent = "Không lấy được lịch sử.";
+          console.error(err);
+        });
+    }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Đồng bộ trạng thái switch và dark mode khi tải lại trang
+      const darkSwitch = document.getElementById("button-darkmode");
+      // Nếu có muốn lưu trạng thái theme vào localStorage:
+      const savedTheme = localStorage.getItem("theme-mode");
+      if (savedTheme) {
+        document.body.classList.toggle("dark-mode", savedTheme === "dark");
+        darkSwitch.checked = savedTheme === "dark";
+      } else {
+        // Mặc định bật dark mode (giống HTML gốc)
+        document.body.classList.toggle("dark-mode", darkSwitch.checked);
+      }
+
+      // Lắng nghe khi gạt switch
+      darkSwitch.addEventListener("change", function (e) {
+        const isDark = e.target.checked;
+        document.body.classList.toggle("dark-mode", isDark);
+        // Lưu trạng thái
+        localStorage.setItem("theme-mode", isDark ? "dark" : "light");
+      });
+    });
+  </script>
+</html>

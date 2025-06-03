@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feedback Form</title>
+  <link rel="stylesheet" href="./css/feedback.css" />
+</head>
+
+<body>
+  <h1>Your Feedback Matters</h1>
+  <h3>Help us improve by sharing your thoughts and experiences</h3>
+  <form id="feedback">
+    <h2>Submit Your Feedback</h2>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required />
+    </div>
+
+    <div class="rating">
+      <div class="notifi-rating">Rating</div>
+      <div class="sao">
+        <span class="star" data-value="1">&#9733;</span>
+        <span class="star" data-value="2">&#9733;</span>
+        <span class="star" data-value="3">&#9733;</span>
+        <span class="star" data-value="4">&#9733;</span>
+        <span class="star" data-value="5">&#9733;</span>
+      </div>
+      <p id="rating-value">Selected Rating: 0</p>
+    </div>
+
+    <div class="write">
+      <label for="feedback">Feedback:</label>
+      <textarea id="feedbackText" name="feedback" rows="9" placeholder="Your feedback..." required></textarea>
+      <br />
+    </div>
+    <button class="submit" id="feedbackBtn">Submit Feedback &#10148;</button>
+  </form>
+</body>
+<script>
+    document.getElementById('feedbackBtn').addEventListener('click', function(event) {
+      SendFeedback(event);
+});
+</script>
+<script src="./js/feedback.js" defer></script>
+
+</html>

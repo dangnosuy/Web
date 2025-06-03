@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Header Example</title>
+  <!-- Sử dụng CDN của Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="./css/header.css">
+
+</head>
+
+<style>
+  .audio-slider-section {
+    margin-top: 2rem;
+    width: 100%;
+  }
+
+  .audio-slider-section .w-full {
+    width: 100%;
+  }
+
+  .audio-slider-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 3rem;
+    /* Thêm padding để các nút điều hướng không sát mép */
+  }
+
+  .audio-slider {
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .audio-item {
+    flex: 0 0 auto;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Các style khác giữ nguyên */
+  .audio-item .info {
+    flex: 1;
+    color: white;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .audio-item .info p {
+    margin: 0;
+  }
+
+  .audio-item .info p:first-child {
+    font-weight: 500;
+  }
+
+  .audio-item .info p:last-child {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+
+  .audio-item .controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .play-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+  }
+
+  .play-btn svg.play-icon {
+    display: inline;
+  }
+
+  .play-btn svg.pause-icon {
+    display: none;
+  }
+
+  .play-btn.playing svg.play-icon {
+    display: none;
+  }
+
+  .play-btn.playing svg.pause-icon {
+    display: inline;
+  }
+
+  .play-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: #3b82f6;
+  }
+
+  .download-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+  }
+
+  .download-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: #9ca3af;
+  }
+
+  .like-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: white;
+    font-size: 0.9rem;
+  }
+
+  .like-btn.liked svg {
+    fill: #f87171;
+    stroke: #f87171;
+  }
+
+  .like-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: white;
+    stroke-width: 2;
+  }
+
+  .slider-btn {
+    z-index: 10;
+    transition: background-color 0.3s;
+  }
+
+  .slider-btn:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  @media (max-width: 768px) {
+    .audio-item {
+      width: 250px;
+    }
+
+    .audio-slider-container {
+      padding: 0 2rem;
+      /* Giảm padding trên mobile */
+    }
+
+    .slider-btn.prev {
+      left: 0.5rem;
+    }
+
+    .slider-btn.next {
+      right: 0.5rem;
+    }
+  }
+
+
+  h1 {
+    padding-top: 3%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+  h1:hover {
+    color: #b8b7b9;
+  }
+
+  .sect {
+    border: 2px solid whitesmoke;
+    border-radius: 10px;
+  }
+
+  .text {
+    text-align: center;
+    width: 70%;
+    font-size: 20px;
+    padding-bottom: 10px;
+  }
+
+  /* From Uiverse.io by mrpumps31232 */
+  .loading-wave {
+    width: 300px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .loading-bar {
+    width: 20px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #0a9de2;
+    border-radius: 5px;
+    animation: loading-wave-animation 1s ease-in-out infinite;
+  }
+
+  .loading-bar:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .loading-bar:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  .loading-bar:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+
+  @keyframes loading-wave-animation {
+    0% {
+      height: 10px;
+    }
+
+    50% {
+      height: 50px;
+    }
+
+    100% {
+      height: 10px;
+    }
+  }
+</style>
+
+<body class="bg-gray-50">
+  <!-- Header -->
+  <header>
+    <button class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="logo">
+      <img style="border: 2px solid #3b82f6 ;" class="w-16 h-16 rounded-full object-cover" src="./asserts/images/logo.png"
+        alt="Logo" />
+      <span class="logo_text" style="background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;" class="text-xl font-bold">
+        AlchemistAI</span>
+    </div>
+    <nav class="menu">
+      <a href="index.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Home</a>
+      <a href="texttospeech.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Text
+        to Speech</a>
+      <a href="texttoimage.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text
+        to Image</a>
+      <a href="#" class="text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1 hover:text-blue-700 text-lg">Text
+        to Music </a>
+      <a href="texttovideo.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text
+        to Video</a>
+    </nav>
+    <div class="login-container">
+      <a href="sign_in.html" id="sign_in" class="login-button">Login</a>
+    </div>
+    <div class="avatar-container">
+      <div style="color: aliceblue; margin-right: 0.75rem; justify-self: center; align-self: center;" id="user-balance">Đang tải…</div>
+      <img src="./asserts/images/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg">
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="profile.html" class="dropdown-menu-item">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="settings.html" class="dropdown-menu-item">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="Sign_in.html" class="dropdown-menu-item logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Log out</span>
+        </a>
+      </div>
+    </div>
+    </div>
+  </header>
+
+  <!-- Nội dung chính -->
+  <main style="background: #0a0425 url('https://th.bing.com/th/id/R.6ae7ab3dab9867d388dcab7399a83c50?rik=XLq28Y9MPtCDWw&riu=http%3a%2f%2fwww.tapeta-abstrakcja-niebieskie-tlo-kolorowe-wiatla.na-pulpit.com%2fzdjecia%2fabstrakcja-niebieskie-tlo-kolorowe-wiatla.jpeg&ehk=W83i9930biq2uLgHFlLwj%2f2bGNbOKh%2fJE2AVEX%2b8SX8%3d&risl=&pid=ImgRaw&r=0') no-repeat center center fixed;
+       background-size: cover;"
+    class="min-h-screen flex flex-col items-center justify-start bg-gray-900 text-gray-100 space-y-4">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Text To Music</h1>
+    <div class="text mb-4">
+      Transform your words into beautiful melodies. Enter your text, select a genre, and let AI create a unique musical
+      composition.
+    </div>
+    <div class="max-w-7xl w-full bg-gray-800 p-4 rounded-lg shadow-md">
+      <!-- Header: chỉ có tab "Text to Music" + Credits -->
+      <div class="flex items-center justify-between mb-4">
+        <!-- Tab "Text to Music" -->
+        <div>
+          <span class="text-sm md:text-base px-3 py-2 border-b-2 border-purple-400 font-bold">
+            Text to Music
+          </span>
+        </div>
+        <!-- Credits góc phải -->
+      </div>
+
+      <!-- Textarea nhập nội dung -->
+      <div class="relative mb-2">
+        <textarea id="textInput"
+          class="w-full bg-gray-700 p-3 rounded-md resize-none text-sm md:text-base border border-gray-700 hover:border-purple-400 transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400"
+          rows="5" maxlength="200" placeholder="Light and lively pop electronic..."></textarea>
+        <!-- Bộ đếm ký tự, ví dụ 0/200 -->
+        <div class="absolute bottom-2 right-3 text-xs text-gray-400">
+          0/200
+        </div>
+      </div>
+
+      <!-- Tabs con: Genre / Mood / Instrument -->
+      <!-- Tabs -->
+      <div class="flex space-x-6 mb-3 text-sm md:text-base">
+        <button class="text-gray-400 hover:text-gray-200 focus:outline-none" onclick="showTab('genre')" id="tab-genre">
+          Genre
+        </button>
+
+        <button class="text-gray-400 hover:text-gray-200 focus:outline-none" onclick="showTab('mood')" id="tab-mood">
+          Mood
+        </button>
+
+        <!-- Đang chọn Instrument: gạch chân và chữ trắng -->
+        <button class="text-white border-b-2 border-purple-400 pb-1 focus:outline-none" onclick="showTab('instrument')"
+          id="tab-instrument">
+          Instrument
+        </button>
+        <button type="button" id="startBtn"class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-5 py-2 rounded-md transition-colors ">🎤 Bấm để nói</button>
+      </div>
+
+      <!-- Danh sách tag của Genre -->
+      <!-- Danh sách tag của Genre -->
+      <div id="genre-content"
+        class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-6 max-h-48 overflow-y-auto pr-1 hidden">
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Pop')">
+          Pop
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Rock')">
+          Rock
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Hip-hop')">
+          Hip-hop
+        </div>
+        <!-- Các tag Genre bổ sung -->
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Jazz')">
+          Jazz
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Classical')">
+          Classical
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Electronic')">
+          Electronic
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Country')">
+          Country
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('R&B')">
+          R&B
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Reggae')">
+          Reggae
+        </div>
+      </div>
+
+      <!-- Danh sách tag của Mood -->
+      <div id="mood-content"
+        class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-6 max-h-48 overflow-y-auto pr-1 hidden">
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Happy')">
+          Happy
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Sad')">
+          Sad
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Engergetic')">
+          Engergetic
+        </div>
+        <!-- Các tag Mood bổ sung -->
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Calm')">
+          Calm
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Romantic')">
+          Romantic
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Melancholic')">
+          Melancholic
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Excited')">
+          Excited
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Relaxed')">
+          Relaxed
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Angry')">
+          Angry
+        </div>
+      </div>
+
+      <!-- Danh sách tag của Instrument -->
+      <div id="instrument-content"
+        class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2 mb-6 max-h-48 overflow-y-auto pr-1">
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Piano')">
+          Piano
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Guitar')">
+          Guitar
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Drums')">
+          Drums
+        </div>
+        <!-- Các tag Instrument bổ sung -->
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Violin')">
+          Violin
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Flute')">
+          Flute
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Saxophone')">
+          Saxophone
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Trumpet')">
+          Trumpet
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Bass')">
+          Bass
+        </div>
+        <div class="bg-gray-700 rounded-full px-3 py-3 text-center cursor-pointer hover:bg-gray-600"
+          onclick="appendToTextarea('Cello')">
+          Cello
+        </div>
+      </div>
+
+
+
+      <!-- Nút Generate -->
+      <div class="flex justify-center">
+        <button onclick="SendPrompt()"
+          class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-5 py-2 rounded-md transition-colors">
+          &#10027; Generate
+        </button>
+      </div>
+    </div>
+    <div class="loading-wave" style="display: none;" id="loading">
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+      <div class="loading-bar"></div>
+    </div>
+    <!-- Sau khi kết thúc phần tử phía trên (VD: </nav>), ta đặt đoạn code này -->
+    <section class="max-w-7xl w-full mx-auto px-4 py-4">
+      <h2 class="text-2xl font-bold mb-4 text-white">Your Generated Music</h2>
+
+      <!-- Khung chứa các bài hát, có chiều cao tối đa & cuộn khi vượt quá -->
+      <div id="song-list" class="bg-gray-300 max-h-250 overflow-y-auto space-y-4 bg-gray-50 p-4 rounded-lg shadow">
+
+        <!-- Bài hát 2 -->
+
+        <!-- Thêm các bài hát khác tại đây... -->
+
+      </div>
+    </section>
+    <section class="audio-slider-section py-10" style="background-color: rgba(0, 0, 0, 0.6);">
+      <div class="w-full">
+        <h2 class="text-3xl font-bold text-white mb-6 text-center">Explore Generated Music</h2>
+        <div class="audio-slider-container relative overflow-hidden">
+          <div class="audio-slider flex transition-transform duration-500 ease-in-out" id="audioSlider">
+            <!-- Audio items will be dynamically added here -->
+          </div>
+          <button
+            class="slider-btn prev absolute left-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full hidden md:block"
+            onclick="prevSlide()">❮</button>
+          <button
+            class="slider-btn next absolute right-4 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full hidden md:block"
+            onclick="nextSlide()">❯</button>
+        </div>
+      </div>
+    </section>
+    <section class="sect py-10" style="background-color: rgba(0, 0, 0, 0.6);">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white mb-6 text-center">Cách Thức Hoạt Động</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-gray-700 p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold text-white mb-2">Bước 1: Nhập Văn Bản</h3>
+            <p class="text-gray-300">Hãy nhập những dòng chữ mô tả cảm xúc và ý tưởng âm nhạc của bạn.</p>
+          </div>
+          <div class="bg-gray-700 p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold text-white mb-2">Bước 2: Tùy Chọn Thể Loại</h3>
+            <p class="text-gray-300">Chọn thể loại, tâm trạng và nhạc cụ phù hợp để cá nhân hóa trải nghiệm của bạn.</p>
+          </div>
+          <div class="bg-gray-700 p-6 rounded-lg shadow">
+            <h3 class="text-xl font-semibold text-white mb-2">Bước 3: Tạo Nhạc</h3>
+            <p class="text-gray-300">Nhận ngay bản nhạc được tạo ra bởi trí tuệ nhân tạo, sẵn sàng để thưởng thức và
+              chia sẻ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Đánh Giá Từ Người Dùng -->
+    <section class="sect py-10" style="background-color: rgba(0, 0, 0, 0.6);">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white mb-6 text-center">Đánh Giá Từ Người Dùng</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow">
+            <p class="text-gray-600 italic">"Trang web này thực sự tuyệt vời! Nó đã biến những dòng chữ của tôi thành
+              những giai điệu đầy cảm hứng."</p>
+            <h4 class="text-lg font-bold text-gray-800 mt-4">Nguyễn Văn A</h4>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow">
+            <p class="text-gray-600 italic">"Một trải nghiệm âm nhạc độc đáo và sáng tạo. Tôi khuyên mọi người nên thử
+              ngay!"</p>
+            <h4 class="text-lg font-bold text-gray-800 mt-4">Trần Thị B</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Câu Hỏi Thường Gặp (FAQ) -->
+    <section class="py-10 sect" style="background-color: rgba(0, 0, 0, 0.6);">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white mb-6 text-center">Câu Hỏi Thường Gặp</h2>
+        <div class="space-y-4">
+          <div class="bg-gray-700 p-4 rounded-lg shadow">
+            <h3 class="text-xl font-semibold text-white">Hỏi: Làm thế nào để sử dụng dịch vụ?</h3>
+            <p class="text-gray-300 mt-2">Trả lời: Chỉ cần nhập văn bản mô tả ý tưởng của bạn, chọn các tùy chọn và nhấn
+              nút "Generate".</p>
+          </div>
+          <div class="bg-gray-700 p-4 rounded-lg shadow">
+            <h3 class="text-xl font-semibold text-white">Hỏi: Có giới hạn số ký tự không?</h3>
+            <p class="text-gray-300 mt-2">Trả lời: Hiện tại, bạn chỉ có thể nhập tối đa 200 ký tự.</p>
+          </div>
+          <div class="bg-gray-700 p-4 rounded-lg shadow">
+            <h3 class="text-xl font-semibold text-white">Hỏi: Tôi có thể tải về bản nhạc của mình không?</h3>
+            <p class="text-gray-300 mt-2">Trả lời: Sau khi nhạc được tạo ra, bạn có thể tải về để thưởng thức hoặc chia
+              sẻ.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="pt-5" style="background-color: #000000;">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-white mb-6 text-center">Liên Hệ</h2>
+      <p class="text-gray-600 mb-4 text-center">Nếu bạn có bất kỳ câu hỏi hoặc góp ý nào, hãy liên hệ với chúng tôi qua
+        email hoặc theo dõi trên các mạng xã hội:</p>
+      <ul class="list-disc list-inside text-gray-600 text-center">
+        <li>Email: support@alchemistai.com</li>
+        <li>Facebook: <a href="#" class="text-blue-600 hover:underline">AlchemistAI Official</a></li>
+        <li>Twitter: <a href="#" class="text-blue-600 hover:underline">@AlchemistAI</a></li>
+      </ul>
+    </div>
+  </section>
+
+</body>
+<script>
+
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    menu.classList.toggle('hidden');
+  }
+  function appendToTextarea(text) {
+    const prompt = document.getElementById('textInput')
+
+    prompt.value += (prompt.value ? ' ' : '') + text + ", "
+    prompt.focus()
+  }
+  function showTab(tabName) {
+    // Lấy các phần tử
+    const genreContent = document.getElementById('genre-content');
+    const moodContent = document.getElementById('mood-content');
+    const instrumentContent = document.getElementById('instrument-content');
+
+    // Lấy các nút tab (để đổi style nếu cần)
+    const tabGenre = document.getElementById('tab-genre');
+    const tabMood = document.getElementById('tab-mood');
+    const tabInstrument = document.getElementById('tab-instrument');
+
+    // Ẩn tất cả khối
+    genreContent.classList.add('hidden');
+    moodContent.classList.add('hidden');
+    instrumentContent.classList.add('hidden');
+
+    // Bỏ gạch chân/đổi màu nút (reset)
+    tabGenre.classList.remove('text-white', 'border-b-2', 'border-purple-400', 'pb-1');
+    tabGenre.classList.add('text-gray-400');
+    tabMood.classList.remove('text-white', 'border-b-2', 'border-purple-400', 'pb-1');
+    tabMood.classList.add('text-gray-400');
+    tabInstrument.classList.remove('text-white', 'border-b-2', 'border-purple-400', 'pb-1');
+    tabInstrument.classList.add('text-gray-400');
+
+    // Dựa theo tabName để hiển thị khối và gạch chân nút
+    switch (tabName) {
+      case 'genre':
+        genreContent.classList.remove('hidden');
+        tabGenre.classList.add('text-white', 'border-b-2', 'border-purple-400', 'pb-1');
+        tabGenre.classList.remove('text-gray-400');
+        break;
+      case 'mood':
+        moodContent.classList.remove('hidden');
+        tabMood.classList.add('text-white', 'border-b-2', 'border-purple-400', 'pb-1');
+        tabMood.classList.remove('text-gray-400');
+        break;
+      case 'instrument':
+        instrumentContent.classList.remove('hidden');
+        tabInstrument.classList.add('text-white', 'border-b-2', 'border-purple-400', 'pb-1');
+        tabInstrument.classList.remove('text-gray-400');
+        break;
+    }
+  }
+
+  // Sample audio data (replace with actual data from your backend or local storage)
+  // Sample audio data (replace with actual data from your backend or local storage)
+
+</script>
+
+<script src="./js/chatbot.js"></script>
+<script src="./js/header.js"></script>
+<script src="./js/speech-to-text.js"></script>
+<script src="./js/texttomusic.js"></script>
+
+</html>

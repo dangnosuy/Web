@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AlchemistAI</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @keyframes scrollRow {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      .animate-scroll {
+        animation: scrollRow 40s linear infinite;
+      }
+
+      .animate-scroll-reverse {
+        animation: scrollRow 50s linear infinite reverse;
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              dark: "#0b0040",
+              primary: "#9b5fff",
+              "gradient-start": "#00c6ff",
+              "gradient-end": "#9932ff",
+              card: "#1a124d",
+              brandgreen: "#00d46e",
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+  </head>
+
+  <body class="min-h-screen flex flex-col bg-dark text-white font-sans">
+<header>
+    <button class="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="logo">
+      <img style="border: 2px solid #3b82f6 ;" class="w-16 h-16 rounded-full object-cover" src="./asserts/images/logo.png"
+      alt="Logo"
+      />
+      <span class="logo_text" style="background: linear-gradient(90deg, #00c6ff, #7d51f1, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;" class="text-xl font-bold">
+      AlchemistAI</span>
+    </div>
+    <nav class="menu">
+      <a href="#" class="text-blue-600 font-extrabold border-b-2 border-blue-600 pb-1 hover:text-blue-700 text-lg">Home</a>
+      <a href="texttospeech.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Text to Speech</a>
+      <a a href="texttoimage.html" class="text-white no-underline font-extrabold hover:text-green-300 pb-1 text-lg">Text to Image</a>
+      <a href="texttomusic.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text to Music</a>
+      <a href="texttovideo.html" class="text-white no-underline font-extrabold  hover:text-green-300 pb-1 text-lg">Text to Video</a>
+    </nav>
+      <div class="login-container">
+          <a href="sign_in.html" id="sign_in" class="login-button">Login</a>
+      </div>
+    <div class="avatar-container">
+      <div style="color: aliceblue; margin-right: 0.75rem; justify-self: center; align-self: center;" id="user-balance">Đang tải…</div>
+      <img src="./asserts/images/ho.jpg" alt="User Avatar" class="avatar" id="avatarImg">
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu" id="dropdownMenu">
+        <a href="profile.html" class="dropdown-menu-item">
+          <i class="fas fa-user"></i>
+          <span>Profile</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="settings.html" class="dropdown-menu-item">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="Sign_in.html" class="dropdown-menu-item logout">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Log out</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  </header>
+
+    <!-- ================= MAIN ================= -->
+    <main class="flex-grow">
+      <!-- Hero -->
+      <section
+        class="text-center py-24 px-4 bg-gradient-to-b from-dark via-[#12004d] to-dark"
+      >
+        <h1 class="hero-title text-4xl sm:text-6xl font-extrabold mb-6">
+          Transform Your Ideas with AI
+        </h1>
+        <h5 class="hero-sub text-xl sm:text-2xl text-primary max-w-3xl mx-auto">
+          Convert text to images, videos, and speech with our powerful AI tools
+        </h5>
+      </section>
+
+      <!-- Feature cards -->
+      <section
+        class="max-w-7xl mx-auto grid grid-cols-1md:grid-cols-2 lg:grid-cols-4 gap-10 py-20 px-4"
+      >
+        <!-- Card component -->
+        <a
+          href="texttoimage.html"
+          class="bg-card rounded-2xl shadow-lg card-hover p-8 flex flex-col items-center text-center"
+        >
+          <div
+            class="w-24 h-24 mb-6 bg-brandgreen rounded-full flex items-center justify-center pulse-hover"
+          >
+            <img
+              src="./asserts/imgaes/Image.png"
+              alt="Text to Image"
+              class="w-12 h-12"
+            />
+          </div>
+          <h2 class="text-2xl font-semibold mb-3 text-primary">
+            Text to Image
+          </h2>
+          <p class="text-gray-300">
+            Transform your text descriptions into stunning visual artwork
+          </p>
+        </a>
+
+        <a
+          href="texttomusic.html"
+          class="bg-card rounded-2xl shadow-lg card-hover p-8 flex flex-col items-center text-center"
+        >
+          <div
+            class="w-24 h-24 mb-6 bg-brandgreen rounded-full flex items-center justify-center pulse-hover"
+          >
+            <img
+              src="./asserts/images/Music.png"
+              alt="Text to Music"
+              class="w-12 h-12"
+            />
+          </div>
+          <h2 class="text-2xl font-semibold mb-3 text-primary">
+            Text to Music
+          </h2>
+          <p class="text-gray-300">
+            Create engaging music from your text content
+          </p>
+        </a>
+
+        <a
+          href="texttospeech.html"
+          class="bg-card rounded-2xl shadow-lg card-hover p-8 flex flex-col items-center text-center"
+        >
+          <div
+            class="w-24 h-24 mb-6 bg-brandgreen rounded-full flex items-center justify-center pulse-hover"
+          >
+            <img
+              src="./asserts/images/Speech.png"
+              alt="Text to Speech"
+              class="w-12 h-12"
+            />
+          </div>
+          <h2 class="text-2xl font-semibold mb-3 text-primary">
+            Text to Speech
+          </h2>
+          <p class="text-gray-300">
+            Convert your text into natural‑sounding speech
+          </p>
+        </a>
+ 
+        <a
+          href="texttovideo.html"
+          class="bg-card rounded-2xl shadow-lg card-hover p-8 flex flex-col items-center text-center"
+        >
+          <div
+            class="w-24 h-24 mb-6 bg-brandgreen rounded-full flex items-center justify-center pulse-hover"
+          >
+            <img
+              src="./asserts/images/Video.png"
+              alt="Text to Video"
+              class="w-12 h-12"
+            />
+          </div>
+          <h2 class="text-2xl font-semibold mb-3 text-primary"> 
+            Text to Video
+          </h2>
+          <p class="text-gray-300">
+            Transform your text into a vivid video illustration
+          </p>
+        </a>
+
+      </section>
+
+      
+
+      <!-- Secondary features -->
+      <section class="py-24 bg-dark">
+        <div class="text-center mb-16 px-4">
+          <p class="uppercase tracking-widest font-bold text-gradient-start">
+            All you need
+          </p>
+          <h2 class="text-4xl font-bold text-primary">
+            What are the features of AlchemistAI?
+          </h2>
+        </div>
+
+        <div
+          class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 px-4"
+        >
+          <div
+            class="bg-card p-8 rounded-2xl text-center hover:ring-2 hover:ring-primary/40 transition"
+          >
+            <i
+              class="fa-solid fa-waveform text-4xl text-gradient-start mb-4"
+            ></i>
+            <h3 class="text-xl font-semibold mb-2 text-primary">
+              Real AI Voice
+            </h3>
+            <p class="text-gray-300">
+              Built on deep learning to create audio incredibly close to a real
+              human voice.
+            </p>
+          </div>
+
+          <div
+            class="bg-card p-8 rounded-2xl text-center hover:ring-2 hover:ring-primary/40 transition"
+          >
+            <i
+              class="fa-solid fa-language text-4xl text-gradient-start mb-4"
+            ></i>
+            <h3 class="text-xl font-semibold mb-2 text-primary">
+              Multiple languages & AI voices
+            </h3>
+            <p class="text-gray-300">
+              Support 10 languages with both male and female voices.
+            </p>
+          </div>
+
+          <div
+            class="bg-card p-8 rounded-2xl text-center hover:ring-2 hover:ring-primary/40 transition"
+          >
+            <i
+              class="fa-solid fa-headphones text-4xl text-gradient-start mb-4"
+            ></i>
+            <h3 class="text-xl font-semibold mb-2 text-primary">
+              Easily convert text to audio
+            </h3>
+            <p class="text-gray-300">
+              Paste or type your script to generate an AI voice.
+            </p>
+          </div>
+
+          <div
+            class="bg-card p-8 rounded-2xl text-center hover:ring-2 hover:ring-primary/40 transition"
+          >
+            <i class="fa-solid fa-image text-4xl text-gradient-start mb-4"></i>
+            <h3 class="text-xl font-semibold mb-2 text-primary">
+              Variety of photo styles
+            </h3>
+            <p class="text-gray-300">
+              Explore 6 different art styles and turn your ideas into beautiful
+              artwork.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feedback button -->
+    
+    </main>
+    <div class="relative w-full overflow-hidden bg-dark">
+      <!-- Container flex dọc chứa 2 hàng ảnh với khoảng cách nhỏ -->
+      <div class="flex flex-col gap-y-2 py-6">
+        
+        <!-- ---------- TOP ROW: Ảnh nhỏ chạy ở phía trên ---------- -->
+        <div class="relative w-full h-32 overflow-hidden flex items-center justify-center">
+          <div class="absolute left-0 w-[200%] flex animate-scroll space-x-2">
+            <template id="topRow">
+              <img src="./asserts/images/anh1.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh2.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images//anh3.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh4.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh5.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh6.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh7.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh8.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh9.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh10.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh11.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh12.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh13.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh14.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh15.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh16.jpg" class="h-40 rounded-lg" />
+            </template>
+            <script>
+              const topRow = document.getElementById("topRow");
+              document.currentScript.insertAdjacentHTML(
+                "beforebegin",
+                topRow.innerHTML + topRow.innerHTML + topRow.innerHTML
+              );
+            </script>
+          </div>
+        </div>
+    
+        <!-- ---------- BOTTOM ROW: Ảnh nhỏ chạy ở phía dưới ---------- -->
+        <div class="relative w-full h-32 overflow-hidden flex items-center justify-center">
+          <div class="absolute left-0 w-[200%] flex animate-scroll-reverse space-x-2">
+            <template id="bottomRow">
+              <img src="./asserts/images/anh10.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh12.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh7.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh16.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh13.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh1.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh2.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh3.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh5.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh4.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh6.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh15.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh8.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh9.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh11.jpg" class="h-40 rounded-lg" />
+          <img src="./asserts/images/anh14.jpg" class="h-40 rounded-lg" />
+            </template>
+            <script>
+              const bottomRow = document.getElementById("bottomRow");
+              document.currentScript.insertAdjacentHTML(
+                "beforebegin",
+                bottomRow.innerHTML + bottomRow.innerHTML + bottomRow.innerHTML
+              );
+            </script>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ---------- TEXT OVERLAY: Luôn đè lên trên tất cả ---------- -->
+      <div class="absolute inset-0 z-20 flex flex-col items-center justify-center text-center">
+        <!-- Lớp phủ mờ làm nền cho text (tùy chọn) -->
+        <div class="absolute inset-0 opacity-40"></div>
+        <div class="relative z-30 px-4">
+          <h1 class="text-4xl md:text-6xl font-bold mb-4 text-while">
+            Exhibition of AI Images
+          </h1>
+          <p class="text-lg md:text-xl mb-6 text-while">
+            Where algorithms dream in color—experience tomorrow's visuals today...
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container mx-auto space-y-16 p-8">
+      <!-- Item 1: Ảnh bên trái, Text bên phải -->
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <!-- Phần hình ảnh -->
+        <div class="relative">
+          <img
+            src="./asserts/images/T0.jpg"
+            alt="Ảnh 1"
+            class="w-[310px] h-[210px] object-cover rounded-[32px]"
+          />
+          <!-- Các nút điều khiển trên ảnh -->
+          <div class="absolute bottom-4 left-4 flex gap-8">
+            <!-- Nút Thả Tim -->
+            <button
+              class="bg-white rounded-full p-2 shadow hover:scale-105 transition-transform"
+            >
+              <!-- Icon Tim (bạn có thể thay bằng icon svg của thư viện, ví dụ Heroicons) -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-red-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 9.24 3 
+                         10.91 3.81 12 5.08 13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 
+                         22 8.5c0 3.78-3.4 6.86-8.55 
+                         11.54L12 21.35z"
+                />
+              </svg>
+            </button>
+            <!-- Nút Tải Xuống -->
+            <button
+              class="bg-white rounded-full p-2 shadow hover:scale-105 transition-transform"
+            >
+              <!-- Icon Tải Xuống -->
+              <p class = "text-blue-500">Tải xuống</p>
+          </div>
+        </div>
+        <!-- Phần văn bản -->
+        <div class="text-center md:text-left">
+          <h2 class="text-3xl font-bold mb-4">Bức ảnh đạt giải nhất tháng 1</h2>
+          <p class="text-while">
+            Là bức ảnh được tạo ra bằng text-to-image của AlchemistAI bằng type realistic.
+          </p>
+        </div>
+      </div>
+
+      <!-- Item 2: Ảnh bên phải, Text bên trái -->
+      <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+        <!-- Phần hình ảnh -->
+        <div class="relative">
+          <img
+            src="./asserts/images/T1.jpg"
+            alt="Ảnh 2"
+            class="w-[310px] h-[210px] object-cover rounded-[32px]"
+          />
+          <!-- Các nút điều khiển trên ảnh -->
+          <div class="absolute bottom-4 left-4 flex gap-8">
+            <!-- Nút Thả Tim -->
+            <button
+              class="bg-white rounded-full p-2 shadow hover:scale-105 transition-transform"
+            >
+              <!-- Icon Tim -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-red-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 9.24 3 
+                         10.91 3.81 12 5.08 13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 
+                         22 8.5c0 3.78-3.4 6.86-8.55 
+                         11.54L12 21.35z"
+                />
+              </svg>
+            </button>
+            <!-- Nút Tải Xuống -->
+            <button
+              class="bg-white rounded-full p-2 shadow hover:scale-105 transition-transform"
+            >
+              <!-- Icon Tải Xuống -->
+              <p class="text-blue-500">Tải xuống</p>
+            </button>
+          </div>
+        </div>
+        <!-- Phần văn bản -->
+        <div class="text-center md:text-left">
+          <h2 class="text-3xl font-bold mb-4">Bức ảnh giải nhất tháng 2</h2>
+          <p class="text-while">
+            Là bức ảnh được tạo ra bằng text-to-image của AlchemistAI bằng type anime.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row items-center gap-8">
+        <!-- Phần hình ảnh -->
+        <div class="relative">
+          <img
+            src="./asserts/images/T2.jpg"
+            alt="Ảnh 1"
+            class="w-[310px] h-[210px] object-cover rounded-[32px]"
+          />
+          <!-- Các nút điều khiển trên ảnh -->
+          <div class="absolute bottom-4 left-4 flex gap-8">
+            <!-- Nút Thả Tim -->
+            <button
+              class="bg-white rounded-full p-2 shadow hover:scale-105 transition-transform"
+            >
+              <!-- Icon Tim (bạn có thể thay bằng icon svg của thư viện, ví dụ Heroicons) -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-red-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 9.24 3 
+                         10.91 3.81 12 5.08 13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 
+                         22 8.5c0 3.78-3.4 6.86-8.55 
+                         11.54L12 21.35z"
+                />
+              </svg>
+            </button>
+            <!-- Nút Tải Xuống -->
+            <button
+              class="bg-white rounded-full p-2 shadow hover:scale-105 transition-transform"
+            >
+              <!-- Icon Tải Xuống -->
+              <p class = "text-blue-500">Tải xuống</p>
+          </div>
+        </div>
+        <!-- Phần văn bản -->
+        <div class="text-center md:text-left">
+          <h2 class="text-3xl font-bold mb-4">Bức ảnh đạt giải nhất tháng 3</h2>
+          <p class="text-while">
+            Là bức ảnh được tạo ra bằng text-to-image của AlchemistAI bằng type Watercolor.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row-reverse items-center gap-8">
+        <!-- Phần hình ảnh -->
+        <div class="relative">
+          <img
+            src="./asserts/images/T3.jpg"
+            alt="Ảnh 2"
+            class="w-[310px] h-[210px] object-cover rounded-[32px]"
+          />
+          <!-- Các nút điều khiển trên ảnh -->
+          <div class="absolute bottom-4 left-4 flex gap-8">
+            <!-- Nút Thả Tim -->
+            <button
+              class="bg-white rounded-full p-2 shadow hover:scale-105 transition-transform"
+            >
+              <!-- Icon Tim -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6 text-red-500"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3 9.24 3 
+                         10.91 3.81 12 5.08 13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 
+                         22 8.5c0 3.78-3.4 6.86-8.55 
+                         11.54L12 21.35z"
+                />
+              </svg>
+            </button>
+            <!-- Nút Tải Xuống -->
+            <button
+              class="bg-white rounded-full p-2 shadow hover:scale-105 transition-transform"
+            >
+              <!-- Icon Tải Xuống -->
+              <p class="text-blue-500">Tải xuống</p>
+            </button>
+          </div>
+        </div>
+        <!-- Phần văn bản -->
+        <div class="text-center md:text-left">
+          <h2 class="text-3xl font-bold mb-4">Bức ảnh giải nhất tháng 4</h2>
+          <p class="text-while">
+            Là bức ảnh được tạo ra bằng text-to-image của AlchemistAI bằng type Oil painting .
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+    <footer
+      class="mt-auto bg-dark border-t border-primary/30 py-6 text-center text-sm text-gray-400"
+    >
+      © 2025 AlchemistAI. All rights reserved.
+    </footer>
+    <script src="./js/header.js"></script>
+    <script src="./js/chatbot.js"></script>
+  </body>
+</html>
